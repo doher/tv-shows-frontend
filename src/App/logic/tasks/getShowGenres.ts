@@ -1,4 +1,4 @@
-import type { Show } from "./types";
+import type { Show } from "../../types";
 
 export const getShowGenres = (shows: readonly Show[]) => {
   const uniqueGenres = new Set<string>();

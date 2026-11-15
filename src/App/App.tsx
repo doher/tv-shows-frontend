@@ -1,7 +1,7 @@
 import styles from "./App.module.css";
+import { usePresenter } from "./logic/usePresenter";
 import { SearchHeader } from "./SearchHeader/SearchHeader";
 import { SearchResults } from "./SearchResults/SearchResults";
-import { usePresenter } from "./usePresenter";
 
 export const App = () => {
   const search = usePresenter();
@@ -13,7 +13,7 @@ export const App = () => {
         {search.status !== "idle" && (
           <SearchResults
             status={search.status}
-            errorMessage={search.errorMessage}
+            errorReason={search.errorReason}
             onRetry={search.retry}
             genreFilters={{
               genres: search.genres,

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { filterShowsByGenre } from "./filterShowsByGenre";
-import { getShowGenres } from "./getShowGenres";
-import { paginateShows } from "./paginateShows";
-import type { SearchState, Show } from "./types";
+import type { SearchState, Show } from "../types";
+import { filterShowsByGenre } from "./tasks/filterShowsByGenre";
+import { getShowGenres } from "./tasks/getShowGenres";
+import { paginateShows } from "./tasks/paginateShows";
 
 const EMPTY_SHOWS: readonly Show[] = [];
 

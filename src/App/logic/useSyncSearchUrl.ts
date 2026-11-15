@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import type { SearchUrlState } from "../types";
 import { replaceSearchUrl } from "./replaceSearchUrl";
-import type { SearchUrlState } from "./types";
 
 export const useSyncSearchUrl = ({ query, genre, page }: SearchUrlState) => {
   useEffect(() => {

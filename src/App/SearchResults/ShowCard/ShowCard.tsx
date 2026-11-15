@@ -1,6 +1,6 @@
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./ShowCard.module.css";
 import type { ShowCardProps } from "./types";
-import { usePresenter } from "./usePresenter";
 
 export const ShowCard = ({ show }: ShowCardProps) => {
   const { metadata, rating, poster, handlePosterError } = usePresenter({

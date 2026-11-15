@@ -1,7 +1,7 @@
 import { Button } from "~/ui-kit/Button/Button";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./Pagination.module.css";
 import type { PaginationProps } from "./types";
-import { usePresenter } from "./usePresenter";
 
 export const Pagination = (props: PaginationProps) => {
   const { page, pageCount } = props;

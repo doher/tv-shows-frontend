@@ -1,5 +1,5 @@
 import { type MouseEvent, useLayoutEffect, useRef } from "react";
-import type { PaginationProps } from "./types";
+import type { PaginationProps } from "../types";
 
 export const useAdjacentPageNavigation = ({
   page,

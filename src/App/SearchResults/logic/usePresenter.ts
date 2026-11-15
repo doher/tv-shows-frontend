@@ -1,14 +1,19 @@
-import type { SearchFeedbackProps } from "./SearchFeedback/types";
-import type { SearchResultsProps } from "./types";
+import type { SearchFeedbackProps } from "../SearchFeedback/types";
+import type { SearchResultsProps } from "../types";
 
 export const usePresenter = ({
   status,
-  errorMessage,
+  errorReason,
   onRetry,
   resultRange: { total },
 }: SearchResultsProps): SearchFeedbackProps | null => {
   if (status === "error") {
-    return { kind: "error", message: errorMessage, onRetry };
+    const message =
+      errorReason === "rateLimited"
+        ? "Слишком много запросов. Попробуйте через несколько секунд."
+        : "Не удалось загрузить сериалы. Попробуйте ещё раз.";
+
+    return { kind: "error", message, onRetry };
   }
 
   if (status === "loading") {

@@ -1,4 +1,4 @@
-import type { SearchUrlState } from "./types";
+import type { SearchUrlState } from "../types";
 
 export const replaceSearchUrl = ({ query, genre, page }: SearchUrlState) => {
   const currentHref = location.href;

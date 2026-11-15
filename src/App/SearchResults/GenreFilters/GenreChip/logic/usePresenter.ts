@@ -1,4 +1,4 @@
-import type { GenreChipProps } from "./types";
+import type { GenreChipProps } from "../types";
 
 export const usePresenter = ({
   genre,

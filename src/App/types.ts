@@ -10,11 +10,19 @@ export type Show = {
 
 export type SearchHit = { show: Show };
 
+export type SearchErrorReason = "rateLimited" | "requestFailed";
+
 export type SearchOutcome =
   | { status: "success"; shows: Show[] }
-  | { status: "error"; errorMessage: string };
+  | { status: "error"; errorReason: SearchErrorReason };
 
 export type SearchRequest = { query: string };
+
+export type SearchSelection = {
+  request: SearchRequest | null;
+  genre: string | null;
+  page: number;
+};
 
 type CompletedSearch = { request: SearchRequest } & SearchOutcome;
 

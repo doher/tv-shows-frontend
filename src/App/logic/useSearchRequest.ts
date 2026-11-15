@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SearchState } from "./types";
+import type { SearchState } from "../types";
 import { useDebouncedQueryCommit } from "./useDebouncedQueryCommit";
 import { usePendingSearch } from "./usePendingSearch";
 

@@ -1,4 +1,4 @@
-import type { Show } from "./types";
+import type { Show } from "../../types";
 
 export const filterShowsByGenre = (
   shows: readonly Show[],

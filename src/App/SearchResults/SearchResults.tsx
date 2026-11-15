@@ -1,10 +1,10 @@
 import { GenreFilters } from "./GenreFilters/GenreFilters";
+import { usePresenter } from "./logic/usePresenter";
 import { Pagination } from "./Pagination/Pagination";
 import { SearchFeedback } from "./SearchFeedback/SearchFeedback";
 import styles from "./SearchResults.module.css";
 import { ShowCard } from "./ShowCard/ShowCard";
 import type { SearchResultsProps } from "./types";
-import { usePresenter } from "./usePresenter";
 
 export const SearchResults = (props: SearchResultsProps) => {
   const feedback = usePresenter(props);

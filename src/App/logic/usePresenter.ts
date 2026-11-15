@@ -1,6 +1,6 @@
 import { useState } from "react";
+import type { SearchStatus } from "../types";
 import { readSearchUrl } from "./readSearchUrl";
-import type { SearchStatus } from "./types";
 import { useSearchRequest } from "./useSearchRequest";
 import { useSearchResults } from "./useSearchResults";
 import { useSearchSelection } from "./useSearchSelection";
@@ -21,7 +21,7 @@ export const usePresenter = () => {
   const request = search.status === "idle" ? null : search.request;
   const displayedRequest =
     displayedSearch.status === "idle" ? null : displayedSearch.request;
-  const { committedSelection, displayedSelection, selectGenre, selectPage } =
+  const { committedSelection, displayedSelection, changeGenre, changePage } =
     useSearchSelection(initialSearch, request, displayedRequest);
   const results = useSearchResults(
     displayedSearch,
@@ -43,9 +43,9 @@ export const usePresenter = () => {
     query,
     setQuery,
     status,
-    errorMessage: search.status === "error" ? search.errorMessage : "",
+    errorReason: search.status === "error" ? search.errorReason : null,
     retry,
-    selectGenre,
-    goToPage: (page: number) => selectPage(page, results.pageCount),
+    selectGenre: changeGenre,
+    goToPage: (page: number) => changePage(page, results.pageCount),
   };
 };

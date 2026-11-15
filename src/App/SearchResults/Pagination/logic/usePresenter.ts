@@ -1,4 +1,4 @@
-import type { PaginationProps } from "./types";
+import type { PaginationProps } from "../types";
 import { useAdjacentPageNavigation } from "./useAdjacentPageNavigation";
 
 export const usePresenter = (props: PaginationProps) => {

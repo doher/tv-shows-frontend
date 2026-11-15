@@ -1,5 +1,5 @@
 import { type ChangeEvent, useId, useRef } from "react";
-import type { SearchFieldProps } from "./types";
+import type { SearchFieldProps } from "../types";
 
 export const usePresenter = (
   onQueryChange: SearchFieldProps["onQueryChange"],

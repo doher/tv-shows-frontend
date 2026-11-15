@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
-import { searchShows } from "./searchShows";
-import type { SearchState } from "./types";
+import type { SearchState } from "../types";
+import { searchShows } from "./tasks/searchShows";
 
 const LOADING_DELAY_MS = 200;
 

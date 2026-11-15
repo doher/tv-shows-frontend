@@ -1,4 +1,4 @@
-import type { SearchUrlState } from "./types";
+import type { SearchUrlState } from "../types";
 
 const parsePage = (param: string) => {
   const page = Number(param);

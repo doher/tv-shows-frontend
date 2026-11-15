@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useEffect } from "react";
-import type { SearchState } from "./types";
+import type { SearchState } from "../types";
 
 const DEBOUNCE_MS = 350;
 

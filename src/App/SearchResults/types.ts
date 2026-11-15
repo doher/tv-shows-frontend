@@ -1,10 +1,15 @@
-import type { ResultRange, SearchStatus, Show } from "../types";
+import type {
+  ResultRange,
+  SearchErrorReason,
+  SearchStatus,
+  Show,
+} from "../types";
 import type { GenreFiltersProps } from "./GenreFilters/types";
 import type { PaginationProps } from "./Pagination/types";
 
 export interface SearchResultsProps {
   status: Exclude<SearchStatus, "idle">;
-  errorMessage: string;
+  errorReason: SearchErrorReason | null;
   onRetry: () => void;
   genreFilters: GenreFiltersProps;
   pagination: PaginationProps;

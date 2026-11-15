@@ -1,4 +1,4 @@
-import type { ResultRange, Show } from "./types";
+import type { ResultRange, Show } from "../../types";
 
 const PAGE_SIZE = 3;
 

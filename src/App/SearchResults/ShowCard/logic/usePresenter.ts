@@ -1,4 +1,4 @@
-import type { ShowCardProps } from "./types";
+import type { ShowCardProps } from "../types";
 import { useShowPoster } from "./useShowPoster";
 
 const PREMIERE_YEAR_LENGTH = 4;
