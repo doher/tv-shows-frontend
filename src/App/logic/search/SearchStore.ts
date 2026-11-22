@@ -4,8 +4,10 @@ import type {
   SearchOutcome,
   SearchRequest,
   SearchState,
+  SuccessfulSearch,
 } from "../../types";
 import { getSearchView } from "./getSearchView";
+import { getPreviousResults } from "./state/getPreviousResults";
 import { startSearch } from "./state/startSearch";
 
 export class SearchStore {
@@ -36,6 +38,11 @@ export class SearchStore {
     return getSearchView(this.search, isLoading);
   }
 
+  get selectableResults() {
+    const displayed = getPreviousResults(this.search);
+    return displayed?.request.query === this.query.trim() ? displayed : null;
+  }
+
   setQuery(value: string) {
     this.query = value;
     if (!value.trim()) {
@@ -44,8 +51,21 @@ export class SearchStore {
     }
   }
 
-  setSearch(search: SearchState) {
-    this.search = search;
+  begin(pending: PendingSearch) {
+    if (pending.request.query !== this.query.trim()) {
+      return false;
+    }
+
+    this.search = pending;
+    this.loadingFor = null;
+    return true;
+  }
+
+  restoreResults(displayed: SuccessfulSearch) {
+    if (this.selectableResults === displayed) {
+      this.search = displayed;
+      this.loadingFor = null;
+    }
   }
 
   showLoading(pending: PendingSearch) {
@@ -56,10 +76,11 @@ export class SearchStore {
 
   complete(pending: PendingSearch, result: SearchOutcome) {
     if (pending !== this.pending) {
-      return;
+      return false;
     }
 
     this.search = { ...result, request: pending.request };
     this.loadingFor = null;
+    return true;
   }
 }

@@ -33,6 +33,7 @@ export const useSearch = () => {
     return { header, results: null };
   }
 
+  const displayed = store.selectableResults;
   return {
     header,
     results: {
@@ -42,14 +43,18 @@ export const useSearch = () => {
       genreFilters: {
         genres: view.genres,
         selectedGenre: view.selectedGenre,
-        onGenreChange: (genre: string | null) =>
-          changeSearchSelection(store, requests, { genre }),
+        onGenreChange: displayed
+          ? (genre: string | null) =>
+              changeSearchSelection(store, requests, { genre }, displayed)
+          : undefined,
       },
       pagination: {
         page: view.page,
         pageCount: view.pageCount,
-        onPageChange: (page: number) =>
-          changeSearchSelection(store, requests, { page }),
+        onPageChange: displayed
+          ? (page: number) =>
+              changeSearchSelection(store, requests, { page }, displayed)
+          : undefined,
       },
       resultRange: view.resultRange,
       shows: view.shows,

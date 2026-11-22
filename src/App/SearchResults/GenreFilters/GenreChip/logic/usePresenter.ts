@@ -7,6 +7,6 @@ export const usePresenter = ({
 }: GenreChipProps) => {
   return {
     isSelected: genre === selectedGenre,
-    selectGenre: () => onGenreChange(genre),
+    selectGenre: onGenreChange && (() => onGenreChange(genre)),
   };
 };

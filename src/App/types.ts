@@ -28,10 +28,12 @@ export type SearchRequest = {
 
 type CompletedSearch = { request: SearchRequest } & SearchOutcome;
 
+export type SuccessfulSearch = Extract<CompletedSearch, { status: "success" }>;
+
 export type PendingSearch = {
   status: "pending";
   request: SearchRequest;
-  previous: Extract<CompletedSearch, { status: "success" }> | null;
+  previous: SuccessfulSearch | null;
 };
 
 export type SearchState = { status: "idle" } | PendingSearch | CompletedSearch;

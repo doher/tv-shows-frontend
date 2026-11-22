@@ -12,6 +12,7 @@ export const GenreChip = (props: GenreChipProps) => {
       className={styles.chip}
       lang={genre === null ? undefined : "en"}
       aria-pressed={isSelected}
+      aria-disabled={!selectGenre || undefined}
       onClick={selectGenre}
     >
       {genre ?? "Все жанры"}

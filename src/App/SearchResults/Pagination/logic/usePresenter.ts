@@ -12,6 +12,10 @@ export const usePresenter = ({
 
   const selectAdjacentPage =
     (nextPage: number) => (event: MouseEvent<HTMLButtonElement>) => {
+      if (!onPageChange) {
+        return;
+      }
+
       rememberArrowFocus(event.currentTarget, nextPage);
       onPageChange(nextPage);
     };
@@ -24,6 +28,6 @@ export const usePresenter = ({
     canGoForward: page < pageCount,
     goBack: selectAdjacentPage(page - 1),
     goForward: selectAdjacentPage(page + 1),
-    selectPage: (number: number) => () => onPageChange(number),
+    selectPage: (number: number) => () => onPageChange?.(number),
   };
 };
