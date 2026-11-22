@@ -1,20 +1,25 @@
 import { type ChangeEvent, useId, useRef } from "react";
-import type { SearchFieldProps } from "../types";
+import { searchStore } from "~/stores/search";
+import { typeQuery } from "./tasks/typeQuery";
 
-export const usePresenter = (
-  onQueryChange: SearchFieldProps["onQueryChange"],
-) => {
+export const usePresenter = () => {
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const changeQuery = (event: ChangeEvent<HTMLInputElement>) => {
-    onQueryChange(event.currentTarget.value);
+    void typeQuery(event.currentTarget.value);
   };
 
   const clearQuery = () => {
     inputRef.current?.focus();
-    onQueryChange("");
+    void typeQuery("");
   };
 
-  return { inputId, inputRef, changeQuery, clearQuery };
+  return {
+    query: searchStore.query,
+    inputId,
+    inputRef,
+    changeQuery,
+    clearQuery,
+  };
 };

@@ -1,4 +1,4 @@
-import type { SearchPage, SearchState, SearchStatus } from "../../types";
+import type { SearchPage, SearchState, SearchStatus } from "~/App/types";
 import { getDisplayedSearch } from "./getDisplayedSearch";
 
 const EMPTY_RESULTS: SearchPage = {

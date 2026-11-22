@@ -1,10 +1,9 @@
+import { observer } from "mobx-react-lite";
 import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchField.module.css";
-import type { SearchFieldProps } from "./types";
 
-export const SearchField = ({ query, onQueryChange }: SearchFieldProps) => {
-  const { inputId, inputRef, changeQuery, clearQuery } =
-    usePresenter(onQueryChange);
+export const SearchField = observer(() => {
+  const { query, inputId, inputRef, changeQuery, clearQuery } = usePresenter();
 
   return (
     <>
@@ -48,4 +47,4 @@ export const SearchField = ({ query, onQueryChange }: SearchFieldProps) => {
       </search>
     </>
   );
-};
+});

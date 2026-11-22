@@ -1,9 +1,9 @@
 import type { PendingSearch, SearchRequest, SearchState } from "~/App/types";
-import { getPreviousResults } from "./getPreviousResults";
+import { getPreviousResults } from "~/search/getPreviousResults";
 
-export const startSearch = (
+export const createPendingSearch = (
   request: SearchRequest,
-  current: SearchState = { status: "idle" },
+  current: SearchState,
 ): PendingSearch => ({
   status: "pending",
   request,

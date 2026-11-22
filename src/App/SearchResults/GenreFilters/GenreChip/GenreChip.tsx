@@ -1,11 +1,11 @@
+import { observer } from "mobx-react-lite";
 import { Button } from "~/ui-kit/Button/Button";
 import styles from "./GenreChip.module.css";
 import { usePresenter } from "./logic/usePresenter";
 import type { GenreChipProps } from "./types";
 
-export const GenreChip = (props: GenreChipProps) => {
-  const { genre } = props;
-  const { isSelected, selectGenre } = usePresenter(props);
+export const GenreChip = observer(({ genre, isSelected }: GenreChipProps) => {
+  const { selectGenre } = usePresenter(genre);
 
   return (
     <Button
@@ -18,4 +18,4 @@ export const GenreChip = (props: GenreChipProps) => {
       {genre ?? "Все жанры"}
     </Button>
   );
-};
+});

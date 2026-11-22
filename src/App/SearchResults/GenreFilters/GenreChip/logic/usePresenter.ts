@@ -1,12 +1,11 @@
-import type { GenreChipProps } from "../types";
+import { searchStore } from "~/stores/search";
+import { changeSearchSelection } from "../../../tasks/changeSearchSelection";
 
-export const usePresenter = ({
-  genre,
-  selectedGenre,
-  onGenreChange,
-}: GenreChipProps) => {
+export const usePresenter = (genre: string | null) => {
+  const displayed = searchStore.selectableResults;
   return {
-    isSelected: genre === selectedGenre,
-    selectGenre: onGenreChange && (() => onGenreChange(genre)),
+    selectGenre: displayed
+      ? () => changeSearchSelection({ genre }, displayed)
+      : undefined,
   };
 };

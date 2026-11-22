@@ -1,15 +1,21 @@
-import type { SearchResultsProps } from "../types";
+import { searchStore } from "~/stores/search";
 import { getSearchFeedback } from "./getSearchFeedback";
+import { getSearchView } from "./getSearchView";
+import { retrySearch } from "./tasks/retrySearch";
 import { useRetryFocus } from "./useRetryFocus";
+import { useSearchLoading } from "./useSearchLoading";
 
-export const usePresenter = (props: SearchResultsProps) => {
+export const usePresenter = () => {
+  const isLoading = useSearchLoading(searchStore.pending);
+  const view = getSearchView(searchStore.search, isLoading);
   const { heading, retryButton, retry } = useRetryFocus(
-    props.status,
-    props.onRetry,
+    view.status,
+    retrySearch,
   );
-  const feedback = getSearchFeedback(props);
+  const feedback = getSearchFeedback(view);
 
   return {
+    view,
     heading,
     feedback:
       feedback?.kind === "error"

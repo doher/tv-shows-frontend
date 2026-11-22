@@ -1,14 +1,16 @@
+import { observer } from "mobx-react-lite";
 import { Button } from "~/ui-kit/Button/Button";
 import { usePresenter } from "./logic/usePresenter";
 import styles from "./Pagination.module.css";
 import type { PaginationProps } from "./types";
 
-export const Pagination = (props: PaginationProps) => {
-  const { page, pageCount, onPageChange } = props;
+export const Pagination = observer((props: PaginationProps) => {
+  const { page, pageCount } = props;
   const {
     currentPageButton,
     handleArrowBlur,
     hasPagination,
+    canSelect,
     canGoBack,
     canGoForward,
     goBack,
@@ -25,7 +27,7 @@ export const Pagination = (props: PaginationProps) => {
       <Button
         className={styles.button}
         aria-label="Назад"
-        aria-disabled={!onPageChange || undefined}
+        aria-disabled={!canSelect || undefined}
         disabled={!canGoBack}
         onBlur={handleArrowBlur}
         onClick={goBack}
@@ -42,7 +44,7 @@ export const Pagination = (props: PaginationProps) => {
             key={number}
             ref={isCurrent ? currentPageButton : undefined}
             aria-label={`Страница ${number}`}
-            aria-disabled={!onPageChange || undefined}
+            aria-disabled={!canSelect || undefined}
             aria-current={isCurrent ? "page" : undefined}
             onClick={selectPage(number)}
           >
@@ -53,7 +55,7 @@ export const Pagination = (props: PaginationProps) => {
       <Button
         className={styles.button}
         aria-label="Вперёд"
-        aria-disabled={!onPageChange || undefined}
+        aria-disabled={!canSelect || undefined}
         disabled={!canGoForward}
         onBlur={handleArrowBlur}
         onClick={goForward}
@@ -62,4 +64,4 @@ export const Pagination = (props: PaginationProps) => {
       </Button>
     </nav>
   );
-};
+});

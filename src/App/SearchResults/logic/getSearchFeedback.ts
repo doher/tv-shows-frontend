@@ -1,10 +1,10 @@
-import type { SearchResultsProps } from "../types";
+import type { getSearchView } from "./getSearchView";
 
 export const getSearchFeedback = ({
   status,
   errorReason,
   resultRange: { total },
-}: Pick<SearchResultsProps, "status" | "errorReason" | "resultRange">) => {
+}: ReturnType<typeof getSearchView>) => {
   if (status === "error") {
     const message =
       errorReason === "rateLimited"

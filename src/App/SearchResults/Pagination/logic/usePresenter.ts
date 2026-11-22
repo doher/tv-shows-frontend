@@ -1,33 +1,34 @@
 import type { MouseEvent } from "react";
+import { searchStore } from "~/stores/search";
+import { changeSearchSelection } from "../../tasks/changeSearchSelection";
 import type { PaginationProps } from "../types";
 import { usePaginationFocus } from "./usePaginationFocus";
 
-export const usePresenter = ({
-  page,
-  pageCount,
-  onPageChange,
-}: PaginationProps) => {
+export const usePresenter = ({ page, pageCount }: PaginationProps) => {
+  const displayed = searchStore.selectableResults;
   const { currentPageButton, handleArrowBlur, rememberArrowFocus } =
     usePaginationFocus(page, pageCount);
 
   const selectAdjacentPage =
     (nextPage: number) => (event: MouseEvent<HTMLButtonElement>) => {
-      if (!onPageChange) {
+      if (!displayed) {
         return;
       }
 
       rememberArrowFocus(event.currentTarget, nextPage);
-      onPageChange(nextPage);
+      changeSearchSelection({ page: nextPage }, displayed);
     };
 
   return {
     currentPageButton,
     handleArrowBlur,
     hasPagination: pageCount > 1,
+    canSelect: displayed !== null,
     canGoBack: page > 1,
     canGoForward: page < pageCount,
     goBack: selectAdjacentPage(page - 1),
     goForward: selectAdjacentPage(page + 1),
-    selectPage: (number: number) => () => onPageChange?.(number),
+    selectPage: (page: number) =>
+      displayed ? () => changeSearchSelection({ page }, displayed) : undefined,
   };
 };

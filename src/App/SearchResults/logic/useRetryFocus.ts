@@ -1,10 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
-import type { SearchResultsProps } from "../types";
+import type { SearchStatus } from "~/App/types";
 
-export const useRetryFocus = (
-  status: SearchResultsProps["status"],
-  onRetry: () => void,
-) => {
+export const useRetryFocus = (status: SearchStatus, onRetry: () => void) => {
   const heading = useRef<HTMLHeadingElement>(null);
   const retryButton = useRef<HTMLButtonElement>(null);
   const waitingForRetry = useRef(false);

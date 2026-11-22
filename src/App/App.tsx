@@ -6,14 +6,14 @@ import { SearchHeader } from "./SearchHeader/SearchHeader";
 import { SearchResults } from "./SearchResults/SearchResults";
 
 export const App = observer(() => {
-  const { searchHeader, favorites, searchResults } = usePresenter();
+  const { favorites } = usePresenter();
 
   return (
     <main className={styles.root}>
       <div className={styles.shell}>
-        <SearchHeader {...searchHeader} />
+        <SearchHeader />
         <Favorites {...favorites} />
-        {searchResults && <SearchResults {...searchResults} />}
+        <SearchResults favoriteActions={favorites.favoriteActions} />
       </div>
     </main>
   );

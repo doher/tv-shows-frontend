@@ -1,4 +1,4 @@
-import type { SearchState } from "../../types";
+import type { SearchState } from "~/App/types";
 
 export const getDisplayedSearch = (
   search: SearchState,
