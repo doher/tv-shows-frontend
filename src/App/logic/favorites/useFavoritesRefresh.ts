@@ -26,7 +26,7 @@ export const useFavoritesRefresh = (
       removeEventListener("focus", refreshWhenVisible);
       document.removeEventListener("visibilitychange", refreshWhenVisible);
       requests.cancel();
-      store.setChanging(false);
+      store.finishChange(null);
     };
   }, [store, requests, refresh]);
 

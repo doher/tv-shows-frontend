@@ -1,19 +1,10 @@
-import { useId, useState } from "react";
+import { useId } from "react";
 import type { FavoritesProps } from "../types";
 import { useRemovedCardFocus } from "./useRemovedCardFocus";
 
 export const usePresenter = ({ list, refresh }: FavoritesProps) => {
   const panelId = useId();
-  const [isOpen, setIsOpen] = useState(false);
   const { trigger, cardRef } = useRemovedCardFocus();
-
-  const toggleOpen = () => {
-    if (!isOpen) {
-      refresh();
-    }
-
-    setIsOpen(!isOpen);
-  };
 
   const retry = () => {
     trigger.current?.focus();
@@ -25,11 +16,9 @@ export const usePresenter = ({ list, refresh }: FavoritesProps) => {
     loadFailed:
       list.status === "error" ||
       (list.status === "ready" && list.refreshFailed),
-    isOpen,
     cardRef,
     panelId,
     retry,
-    toggleOpen,
     trigger,
   };
 };

@@ -8,24 +8,24 @@ export const toggleFavorite = async (
   requests: FavoritesRequests,
   id: number,
 ): Promise<"added" | "removed" | "failed" | null> => {
-  if (!store.canChange) {
+  const shouldFavorite = store.beginChange(id);
+  if (shouldFavorite === null) {
     return null;
   }
 
   const signal = requests.start();
-  store.setChanging(true);
-  const shouldFavorite = !store.ids.has(id);
   const result = await setFavorite(id, shouldFavorite, signal);
   if (!requests.finish(signal)) {
     return null;
   }
 
-  store.finishChange(result?.shows ?? null);
   if (result === null) {
+    store.finishChange(null);
     void refreshFavorites(store, requests);
     return "failed";
   }
 
+  store.finishChange(result.shows, result.removed);
   if (!result.changed) {
     return null;
   }

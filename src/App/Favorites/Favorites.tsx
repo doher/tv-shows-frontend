@@ -6,18 +6,10 @@ import { usePresenter } from "./logic/usePresenter";
 import type { FavoritesProps } from "./types";
 
 export const Favorites = (props: FavoritesProps) => {
-  const { list, notice, favoriteActions } = props;
-  const {
-    count,
-    loadFailed,
-    isOpen,
-    cardRef,
-    panelId,
-    retry,
-    toggleOpen,
-    trigger,
-  } = usePresenter(props);
-  const visibleShows = isOpen && list.status === "ready" ? list.shows : null;
+  const { list, notice, favoriteActions, panel } = props;
+  const { isOpen, visibleShows, toggleOpen } = panel;
+  const { count, loadFailed, cardRef, panelId, retry, trigger } =
+    usePresenter(props);
 
   return (
     <div className={styles.root}>
@@ -57,6 +49,12 @@ export const Favorites = (props: FavoritesProps) => {
         )}
         {visibleShows?.length === 0 && (
           <p className={styles.message}>В избранном пока нет сериалов.</p>
+        )}
+        {visibleShows && visibleShows.length > favoriteActions.ids.size && (
+          <p className={styles.message}>
+            Пока избранное открыто, нажмите на пустую звезду, чтобы вернуть
+            сериал.
+          </p>
         )}
       </div>
       <Toast notice={notice} />

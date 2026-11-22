@@ -1,11 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import type { ToastNotice } from "~/ui-kit/Toast/types";
 import type { FavoriteState } from "../../Favorites/types";
 import type { Show } from "../../types";
 
 export class FavoritesStore {
   list: FavoriteState = { status: "loading" };
-  notice: ToastNotice | null = null;
   private changing = false;
 
   constructor() {
@@ -39,24 +37,19 @@ export class FavoritesStore {
         : { status: "error" };
   }
 
-  setChanging(changing: boolean) {
-    this.changing = changing;
+  beginChange(id: number) {
+    if (!this.canChange) {
+      return null;
+    }
+
+    this.changing = true;
+    return !this.ids.has(id);
   }
 
-  finishChange(shows: readonly Show[] | null) {
+  finishChange(shows: readonly Show[] | null, removed?: Show | null) {
     this.changing = false;
     if (shows !== null) {
-      this.list = { status: "ready", shows };
+      this.list = { status: "ready", shows, removed };
     }
-  }
-
-  dismissNotice(notice: ToastNotice) {
-    if (this.notice === notice) {
-      this.notice = null;
-    }
-  }
-
-  showNotice(kind: ToastNotice["kind"], message: string) {
-    this.notice = { kind, message, revision: (this.notice?.revision ?? 0) + 1 };
   }
 }
