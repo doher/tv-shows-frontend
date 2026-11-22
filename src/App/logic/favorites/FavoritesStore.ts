@@ -6,8 +6,7 @@ import type { Show } from "../../types";
 export class FavoritesStore {
   list: FavoriteState = { status: "loading" };
   notice: FavoriteNotice | null = null;
-  private load: AbortController | null = null;
-  private mutation: AbortController | null = null;
+  private changing = false;
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true, deep: false });
@@ -19,24 +18,16 @@ export class FavoritesStore {
   }
 
   get canChange() {
-    return this.list.status === "ready" && this.mutation === null;
+    return this.list.status === "ready" && !this.changing;
   }
 
-  beginLoad() {
-    if (this.load !== null || this.mutation !== null) {
-      return null;
-    }
-
+  markLoading() {
     if (this.list.status === "error") {
       this.list = { status: "loading" };
     }
-
-    this.load = new AbortController();
-    return this.load.signal;
   }
 
   finishLoad(shows: readonly Show[] | null) {
-    this.load = null;
     if (shows !== null) {
       this.list = { status: "ready", shows };
       return;
@@ -48,29 +39,12 @@ export class FavoritesStore {
         : { status: "error" };
   }
 
-  beginChange() {
-    if (!this.canChange) {
-      return null;
-    }
-
-    this.cancelLoad();
-    this.mutation = new AbortController();
-    return this.mutation.signal;
-  }
-
-  cancelRequests() {
-    this.cancelLoad();
-    this.mutation?.abort();
-    this.mutation = null;
-  }
-
-  private cancelLoad() {
-    this.load?.abort();
-    this.load = null;
+  setChanging(changing: boolean) {
+    this.changing = changing;
   }
 
   finishChange(shows: readonly Show[] | null) {
-    this.mutation = null;
+    this.changing = false;
     if (shows !== null) {
       this.list = { status: "ready", shows };
     }
