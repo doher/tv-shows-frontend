@@ -15,6 +15,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check Pages API configuration
+        if: github.event_name != 'pull_request' && vars.VITE_API_BASE_URL == ''
+        run: |
+          echo "::error::Set the VITE_API_BASE_URL repository variable to the backend origin."
+          exit 1
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -29,6 +34,7 @@ jobs:
       - name: Build
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: pnpm build --base "${PAGES_BASE_PATH}/"
       - name: Upload GitHub Pages artifact
         if: github.event_name != 'pull_request'

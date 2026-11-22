@@ -33,15 +33,6 @@
   outline-offset: 2px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 13px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;
@@ -55,11 +46,4 @@
   color: var(--kadr-muted);
   font-size: 13px;
   text-underline-offset: 3px;
-}
-
-@media (max-width: 530px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-  }
 }

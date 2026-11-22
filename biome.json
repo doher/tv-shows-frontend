@@ -48,6 +48,37 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/**/*Store.ts"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noJsRestrictedProperties": {
+              "level": "error",
+              "options": {
+                "entries": [
+                  { "object": "globalThis", "property": "AbortController" },
+                  { "object": "window", "property": "AbortController" },
+                  { "object": "self", "property": "AbortController" }
+                ]
+              }
+            }
+          },
+          "style": {
+            "noRestrictedGlobals": {
+              "level": "error",
+              "options": {
+                "deniedGlobals": {
+                  "AbortController": "Manage request cancellation outside the MobX store."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {

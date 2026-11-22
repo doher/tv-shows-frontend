@@ -1,6 +1,6 @@
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchField.module.css";
 import type { SearchFieldProps } from "./types";
-import { usePresenter } from "./usePresenter";
 
 export const SearchField = ({ query, onQueryChange }: SearchFieldProps) => {
   const { inputId, inputRef, changeQuery, clearQuery } =

@@ -1,0 +1,31 @@
+.root {
+  margin-bottom: 17px;
+}
+
+.toggle {
+  min-height: 44px;
+  padding: 6px 13px;
+  font: inherit;
+  font-weight: 650;
+}
+
+.toggle span {
+  margin-inline-end: 3px;
+  color: var(--kadr-amber);
+}
+
+.panel {
+  margin-top: 13px;
+}
+
+.message {
+  margin: 0;
+  color: var(--kadr-muted);
+}
+
+.feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}

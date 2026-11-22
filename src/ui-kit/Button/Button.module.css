@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 
-.button:where(:hover:not(:disabled)) {
+.button:where(:hover:not(:disabled, [aria-disabled="true"])) {
   border-color: #ad72b3;
   background: #302044;
 }
@@ -24,7 +24,8 @@
   outline-offset: 2px;
 }
 
-.button:disabled {
+.button:disabled,
+.button:where([aria-disabled="true"]) {
   opacity: 0.5;
   cursor: default;
 }
