@@ -1,5 +1,5 @@
+import { changeSearchSelection } from "~/App/SearchResults/tasks/changeSearchSelection";
 import { searchStore } from "~/stores/search";
-import { changeSearchSelection } from "../../../tasks/changeSearchSelection";
 
 export const usePresenter = (genre: string | null) => {
   const displayed = searchStore.selectableResults;
