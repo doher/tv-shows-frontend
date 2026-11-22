@@ -1,26 +1,23 @@
-import { useState } from "react";
+import { favoritesStore } from "~/stores/favorites";
+import type { Show } from "~/types/show";
 import type { FavoritesProps } from "../../Favorites/types";
-import type { Show } from "../../types";
+import { refreshFavorites } from "../tasks/refreshFavorites";
 import { toggleFavorite } from "../tasks/toggleFavorite";
-import { FavoritesRequests } from "./FavoritesRequests";
-import { FavoritesStore } from "./FavoritesStore";
 import { useFavoriteNotice } from "./useFavoriteNotice";
 import { useFavoritesPanel } from "./useFavoritesPanel";
 import { useFavoritesRefresh } from "./useFavoritesRefresh";
 
 export const useFavorites = (): FavoritesProps => {
-  const [store] = useState(() => new FavoritesStore());
-  const [requests] = useState(() => new FavoritesRequests());
-  const refresh = useFavoritesRefresh(store, requests);
+  useFavoritesRefresh();
   const { notice, showNotice } = useFavoriteNotice();
-  const { panel, expectRemoval } = useFavoritesPanel(store, refresh);
+  const { panel, expectRemoval } = useFavoritesPanel();
 
   const onToggle = async (show: Show) => {
-    if (store.canChange && store.ids.has(show.id)) {
+    if (favoritesStore.editableList && favoritesStore.ids.has(show.id)) {
       expectRemoval(show.id);
     }
 
-    const change = await toggleFavorite(store, requests, show.id);
+    const change = await toggleFavorite(show.id);
     if (change === null) {
       return;
     }
@@ -36,13 +33,13 @@ export const useFavorites = (): FavoritesProps => {
   };
 
   return {
-    list: store.list,
+    list: favoritesStore.list,
     panel,
     notice,
-    refresh,
+    refresh: refreshFavorites,
     favoriteActions: {
-      ids: store.ids,
-      canChange: store.canChange,
+      ids: favoritesStore.ids,
+      canChange: favoritesStore.editableList !== null,
       onToggle,
     },
   };

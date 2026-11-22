@@ -1,34 +1,39 @@
+import { action } from "mobx";
+import { favoritesStore } from "~/stores/favorites";
 import { setFavorite } from "../api/setFavorite";
-import type { FavoritesRequests } from "../favorites/FavoritesRequests";
-import type { FavoritesStore } from "../favorites/FavoritesStore";
+import { favoritesRequests } from "../favorites/FavoritesRequests";
 import { refreshFavorites } from "./refreshFavorites";
 
-export const toggleFavorite = async (
-  store: FavoritesStore,
-  requests: FavoritesRequests,
-  id: number,
-): Promise<"added" | "removed" | "failed" | null> => {
-  const shouldFavorite = store.beginChange(id);
-  if (shouldFavorite === null) {
-    return null;
-  }
+export const toggleFavorite = action(
+  async (id: number): Promise<"added" | "removed" | "failed" | null> => {
+    const list = favoritesStore.editableList;
+    if (!list) {
+      return null;
+    }
 
-  const signal = requests.start();
-  const result = await setFavorite(id, shouldFavorite, signal);
-  if (!requests.finish(signal)) {
-    return null;
-  }
+    const shouldFavorite = !favoritesStore.ids.has(id);
+    const signal = favoritesRequests.start();
+    favoritesStore.setList({ ...list, changing: true });
+    const result = await setFavorite(id, shouldFavorite, signal);
+    if (!favoritesRequests.finish(signal)) {
+      return null;
+    }
 
-  if (result === null) {
-    store.finishChange(null);
-    void refreshFavorites(store, requests);
-    return "failed";
-  }
+    if (result === null) {
+      favoritesStore.setList(list);
+      void refreshFavorites();
+      return "failed";
+    }
 
-  store.finishChange(result.shows, result.removed);
-  if (!result.changed) {
-    return null;
-  }
+    favoritesStore.setList({
+      status: "ready",
+      shows: result.shows,
+      removed: result.removed,
+    });
+    if (!result.changed) {
+      return null;
+    }
 
-  return shouldFavorite ? "added" : "removed";
-};
+    return shouldFavorite ? "added" : "removed";
+  },
+);

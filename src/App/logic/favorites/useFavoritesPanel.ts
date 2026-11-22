@@ -1,22 +1,20 @@
 import { reaction } from "mobx";
 import { useEffect, useState } from "react";
+import { favoritesStore } from "~/stores/favorites";
 import type { FavoritesPanelSnapshot } from "../../Favorites/types";
-import type { FavoritesStore } from "./FavoritesStore";
+import { refreshFavorites } from "../tasks/refreshFavorites";
 import { updateFavoritesPanel } from "./updateFavoritesPanel";
 
-export const useFavoritesPanel = (
-  store: FavoritesStore,
-  refresh: () => void,
-) => {
+export const useFavoritesPanel = () => {
   const [snapshot, setSnapshot] = useState<FavoritesPanelSnapshot | null>(null);
 
   useEffect(
     () =>
       reaction(
-        () => store.list,
+        () => favoritesStore.list,
         (list) => setSnapshot((panel) => updateFavoritesPanel(panel, list)),
       ),
-    [store],
+    [],
   );
 
   const toggleOpen = () => {
@@ -25,9 +23,10 @@ export const useFavoritesPanel = (
       return;
     }
 
-    const shows = store.list.status === "ready" ? store.list.shows : [];
+    const { list } = favoritesStore;
+    const shows = list.status === "ready" ? list.shows : [];
     setSnapshot({ shows, visibleShows: shows });
-    refresh();
+    void refreshFavorites();
   };
 
   const expectRemoval = (id: number) => {
@@ -38,7 +37,7 @@ export const useFavoritesPanel = (
     panel: {
       isOpen: snapshot !== null,
       visibleShows:
-        store.list.status === "ready" && snapshot
+        favoritesStore.list.status === "ready" && snapshot
           ? snapshot.visibleShows
           : null,
       toggleOpen,

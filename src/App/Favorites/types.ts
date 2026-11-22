@@ -1,15 +1,7 @@
+import type { FavoriteState } from "~/types/favorites";
+import type { Show } from "~/types/show";
 import type { ToastNotice } from "~/ui-kit/Toast/types";
-import type { FavoriteActions, Show } from "../types";
-
-export type FavoriteState =
-  | { status: "loading" }
-  | { status: "error" }
-  | {
-      status: "ready";
-      shows: readonly Show[];
-      removed?: Show | null;
-      refreshFailed?: true;
-    };
+import type { FavoriteActions } from "../types";
 
 export interface FavoritesPanelSnapshot {
   shows: readonly Show[];

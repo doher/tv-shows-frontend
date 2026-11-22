@@ -1,5 +1,6 @@
 import type { RefCallback } from "react";
-import type { FavoriteActions, Show } from "~/App/types";
+import type { FavoriteActions } from "~/App/types";
+import type { Show } from "~/types/show";
 
 export interface ShowGridProps {
   label: string;

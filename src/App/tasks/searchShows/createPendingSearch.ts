@@ -1,5 +1,5 @@
-import type { PendingSearch, SearchRequest, SearchState } from "~/App/types";
-import { getPreviousResults } from "~/search/getPreviousResults";
+import type { PendingSearch, SearchRequest, SearchState } from "~/types/search";
+import { getPreviousResults } from "~/utils/getPreviousResults";
 
 export const createPendingSearch = (
   request: SearchRequest,

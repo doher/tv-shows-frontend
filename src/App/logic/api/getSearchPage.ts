@@ -1,4 +1,4 @@
-import type { SearchOutcome, SearchPage, SearchRequest } from "../../types";
+import type { SearchOutcome, SearchPage, SearchRequest } from "~/types/search";
 import { getApiUrl } from "./getApiUrl";
 
 const HTTP_TOO_MANY_REQUESTS = 429;

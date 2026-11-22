@@ -1,7 +1,7 @@
 import { searchStore } from "~/stores/search";
+import type { SearchRequest } from "~/types/search";
 import { getSearchPage } from "../../logic/api/getSearchPage";
 import { searchRequests } from "../../logic/search/SearchRequests";
-import type { SearchRequest } from "../../types";
 import { createPendingSearch } from "./createPendingSearch";
 
 export const searchShows = async (request: SearchRequest) => {

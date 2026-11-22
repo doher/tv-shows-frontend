@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import type { SearchStatus } from "~/App/types";
+import type { SearchStatus } from "../types";
 
 export const useRetryFocus = (status: SearchStatus, onRetry: () => void) => {
   const heading = useRef<HTMLHeadingElement>(null);

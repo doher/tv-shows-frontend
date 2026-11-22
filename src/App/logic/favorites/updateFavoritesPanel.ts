@@ -1,8 +1,6 @@
-import type {
-  FavoriteState,
-  FavoritesPanelSnapshot,
-} from "../../Favorites/types";
-import type { Show } from "../../types";
+import type { FavoriteState } from "~/types/favorites";
+import type { Show } from "~/types/show";
+import type { FavoritesPanelSnapshot } from "../../Favorites/types";
 
 export const updateFavoritesPanel = (
   panel: FavoritesPanelSnapshot | null,

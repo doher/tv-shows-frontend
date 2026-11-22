@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { PendingSearch } from "~/App/types";
+import type { PendingSearch } from "~/types/search";
 
 const LOADING_DELAY_MS = 200;
 

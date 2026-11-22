@@ -1,7 +1,8 @@
-import type { Show } from "../../types";
+import { action } from "mobx";
+import { favoritesStore } from "~/stores/favorites";
+import type { Show } from "~/types/show";
 import { getFavoriteShows } from "../api/getFavoriteShows";
-import type { FavoritesRequests } from "../favorites/FavoritesRequests";
-import type { FavoritesStore } from "../favorites/FavoritesStore";
+import { favoritesRequests } from "../favorites/FavoritesRequests";
 
 type RefreshFavoritesResult =
   | { status: "success"; shows: readonly Show[] }
@@ -9,21 +10,33 @@ type RefreshFavoritesResult =
   | { status: "cancelled" }
   | { status: "error" };
 
-export const refreshFavorites = async (
-  store: FavoritesStore,
-  requests: FavoritesRequests,
-): Promise<RefreshFavoritesResult> => {
-  if (requests.pending) {
-    return { status: "skipped" };
-  }
+export const refreshFavorites = action(
+  async (): Promise<RefreshFavoritesResult> => {
+    if (favoritesRequests.pending) {
+      return { status: "skipped" };
+    }
 
-  const signal = requests.start();
-  store.markLoading();
-  const shows = await getFavoriteShows(signal);
-  if (!requests.finish(signal)) {
-    return { status: "cancelled" };
-  }
+    const signal = favoritesRequests.start();
+    const list = favoritesStore.list;
+    if (list.status === "error") {
+      favoritesStore.setList({ status: "loading" });
+    }
 
-  store.finishLoad(shows);
-  return shows === null ? { status: "error" } : { status: "success", shows };
-};
+    const shows = await getFavoriteShows(signal);
+    if (!favoritesRequests.finish(signal)) {
+      return { status: "cancelled" };
+    }
+
+    if (shows === null) {
+      favoritesStore.setList(
+        list.status === "ready"
+          ? { ...list, refreshFailed: true }
+          : { status: "error" },
+      );
+      return { status: "error" };
+    }
+
+    favoritesStore.setList({ status: "ready", shows });
+    return { status: "success", shows };
+  },
+);

@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import type { SearchState } from "~/App/types";
-import { getPreviousResults } from "~/search/getPreviousResults";
+import type { SearchState } from "~/types/search";
+import { getPreviousResults } from "~/utils/getPreviousResults";
 
 export class SearchStore {
   query = "";

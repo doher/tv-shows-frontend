@@ -1,4 +1,4 @@
-import type { SearchRequest } from "~/App/types";
+import type { SearchRequest } from "~/types/search";
 
 export const replaceSearchUrl = ({ query, genre, page }: SearchRequest) => {
   const currentHref = location.href;

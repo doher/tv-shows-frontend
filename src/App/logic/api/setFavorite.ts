@@ -1,4 +1,4 @@
-import type { Show } from "../../types";
+import type { Show } from "~/types/show";
 import { getApiUrl } from "./getApiUrl";
 
 type FavoriteUpdate = {
