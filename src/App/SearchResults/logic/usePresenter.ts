@@ -1,31 +1,19 @@
-import type { SearchFeedbackProps } from "../SearchFeedback/types";
 import type { SearchResultsProps } from "../types";
+import { getSearchFeedback } from "./getSearchFeedback";
+import { useRetryFocus } from "./useRetryFocus";
 
-export const usePresenter = ({
-  status,
-  errorReason,
-  onRetry,
-  resultRange: { total },
-}: SearchResultsProps): SearchFeedbackProps | null => {
-  if (status === "error") {
-    const message =
-      errorReason === "rateLimited"
-        ? "Слишком много запросов. Попробуйте через несколько секунд."
-        : "Не удалось загрузить сериалы. Попробуйте ещё раз.";
+export const usePresenter = (props: SearchResultsProps) => {
+  const { heading, retryButton, retry } = useRetryFocus(
+    props.status,
+    props.onRetry,
+  );
+  const feedback = getSearchFeedback(props);
 
-    return { kind: "error", message, onRetry };
-  }
-
-  if (status === "loading") {
-    return { kind: "status", message: "Ищем сериалы…" };
-  }
-
-  if (status === "success" && total === 0) {
-    return {
-      kind: "status",
-      message: "Ничего не найдено. Попробуйте другое название.",
-    };
-  }
-
-  return null;
+  return {
+    heading,
+    feedback:
+      feedback?.kind === "error"
+        ? { ...feedback, onRetry: retry, retryButton }
+        : feedback,
+  };
 };

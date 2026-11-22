@@ -1,4 +1,5 @@
 import type {
+  FavoriteActions,
   ResultRange,
   SearchErrorReason,
   SearchStatus,
@@ -15,4 +16,5 @@ export interface SearchResultsProps {
   pagination: PaginationProps;
   resultRange: ResultRange;
   shows: Show[];
+  favoriteActions: FavoriteActions;
 }

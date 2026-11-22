@@ -8,39 +8,43 @@ export type Show = {
   rating: { average: number | null };
 };
 
-export type SearchHit = { show: Show };
+export interface FavoriteActions {
+  ids: ReadonlySet<number>;
+  canChange: boolean;
+  onToggle: (show: Show) => void;
+}
 
 export type SearchErrorReason = "rateLimited" | "requestFailed";
 
 export type SearchOutcome =
-  | { status: "success"; shows: Show[] }
+  | { status: "success"; results: SearchPage }
   | { status: "error"; errorReason: SearchErrorReason };
 
-export type SearchRequest = { query: string };
-
-export type SearchSelection = {
-  request: SearchRequest | null;
+export type SearchRequest = {
+  query: string;
   genre: string | null;
   page: number;
 };
 
 type CompletedSearch = { request: SearchRequest } & SearchOutcome;
 
-export type SearchState =
-  | { status: "idle" }
-  | {
-      status: "pending";
-      request: SearchRequest;
-      previous: Extract<CompletedSearch, { status: "success" }> | null;
-    }
-  | CompletedSearch;
+export type PendingSearch = {
+  status: "pending";
+  request: SearchRequest;
+  previous: Extract<CompletedSearch, { status: "success" }> | null;
+};
+
+export type SearchState = { status: "idle" } | PendingSearch | CompletedSearch;
 
 export type SearchStatus = SearchState["status"] | "loading";
 
-export type SearchUrlState = {
-  query: string;
-  genre: string | null;
+export type SearchPage = {
+  shows: Show[];
+  genres: string[];
+  selectedGenre: string | null;
   page: number;
+  pageCount: number;
+  resultRange: ResultRange;
 };
 
 export type ResultRange = {

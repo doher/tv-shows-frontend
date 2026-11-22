@@ -1,0 +1,22 @@
+.root {
+  position: fixed;
+  z-index: 1;
+  inset: auto 20px max(20px, env(safe-area-inset-bottom)) auto;
+  width: max-content;
+  max-width: calc(100vw - 40px);
+  pointer-events: none;
+}
+
+.message {
+  margin: 0;
+  padding: 10px 15px;
+  border: 1px solid var(--kadr-accent);
+  border-radius: 8px;
+  background: var(--kadr-field);
+  box-shadow: 0 4px 16px #0008;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  border-color: var(--kadr-pink);
+}

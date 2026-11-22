@@ -32,7 +32,7 @@
 рекомендациями навыков.
 
 Трекер для `code-review` — GitHub Issues репозитория
-[doher/simple-architecture](https://github.com/doher/simple-architecture).
+[doher/tv-shows-frontend](https://github.com/doher/tv-shows-frontend).
 Читай связанные задачи через подключённый GitHub MCP.
 
 ### Ревью незакоммиченных изменений

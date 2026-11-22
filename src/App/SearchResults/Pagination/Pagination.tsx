@@ -7,6 +7,7 @@ export const Pagination = (props: PaginationProps) => {
   const { page, pageCount } = props;
   const {
     currentPageButton,
+    handleArrowBlur,
     hasPagination,
     canGoBack,
     canGoForward,
@@ -25,6 +26,7 @@ export const Pagination = (props: PaginationProps) => {
         className={styles.button}
         aria-label="Назад"
         disabled={!canGoBack}
+        onBlur={handleArrowBlur}
         onClick={goBack}
       >
         ‹
@@ -50,6 +52,7 @@ export const Pagination = (props: PaginationProps) => {
         className={styles.button}
         aria-label="Вперёд"
         disabled={!canGoForward}
+        onBlur={handleArrowBlur}
         onClick={goForward}
       >
         ›

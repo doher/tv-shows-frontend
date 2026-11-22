@@ -14,7 +14,11 @@ export const SearchFeedback = (props: SearchFeedbackProps) => {
     return (
       <div className={styles.error}>
         {message}
-        <Button className={styles.retry} onClick={props.onRetry}>
+        <Button
+          className={styles.retry}
+          onClick={props.onRetry}
+          ref={props.retryButton}
+        >
           Повторить поиск
         </Button>
       </div>
