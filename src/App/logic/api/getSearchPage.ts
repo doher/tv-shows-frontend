@@ -15,14 +15,12 @@ export const getSearchPage = async (
 
   try {
     const response = await fetch(getApiUrl(`/api/shows?${params}`), { signal });
+    if (response.status === HTTP_TOO_MANY_REQUESTS) {
+      return { status: "error", errorReason: "rateLimited" };
+    }
+
     if (!response.ok) {
-      return {
-        status: "error",
-        errorReason:
-          response.status === HTTP_TOO_MANY_REQUESTS
-            ? "rateLimited"
-            : "requestFailed",
-      };
+      return { status: "error", errorReason: "requestFailed" };
     }
 
     const results: SearchPage = await response.json();

@@ -1,7 +1,7 @@
 import { Button } from "~/ui-kit/Button/Button";
+import { Toast } from "~/ui-kit/Toast/Toast";
 import { ShowGrid } from "../components/ShowGrid/ShowGrid";
 import styles from "./Favorites.module.css";
-import { FavoriteToast } from "./FavoriteToast/FavoriteToast";
 import { usePresenter } from "./logic/usePresenter";
 import type { FavoritesProps } from "./types";
 
@@ -17,6 +17,7 @@ export const Favorites = (props: FavoritesProps) => {
     toggleOpen,
     trigger,
   } = usePresenter(props);
+  const visibleShows = isOpen && list.status === "ready" ? list.shows : null;
 
   return (
     <div className={styles.root}>
@@ -46,20 +47,19 @@ export const Favorites = (props: FavoritesProps) => {
             </Button>
           </div>
         )}
-        {isOpen &&
-          list.status === "ready" &&
-          (list.shows.length > 0 ? (
-            <ShowGrid
-              label="Избранные сериалы"
-              shows={list.shows}
-              favoriteActions={favoriteActions}
-              cardRef={cardRef}
-            />
-          ) : (
-            <p className={styles.message}>В избранном пока нет сериалов.</p>
-          ))}
+        {visibleShows && visibleShows.length > 0 && (
+          <ShowGrid
+            label="Избранные сериалы"
+            shows={visibleShows}
+            favoriteActions={favoriteActions}
+            cardRef={cardRef}
+          />
+        )}
+        {visibleShows?.length === 0 && (
+          <p className={styles.message}>В избранном пока нет сериалов.</p>
+        )}
       </div>
-      <FavoriteToast notice={notice} />
+      <Toast notice={notice} />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import type { FavoriteNotice } from "../../Favorites/FavoriteToast/types";
+import type { ToastNotice } from "~/ui-kit/Toast/types";
 import type { FavoriteState } from "../../Favorites/types";
 import type { Show } from "../../types";
 
 export class FavoritesStore {
   list: FavoriteState = { status: "loading" };
-  notice: FavoriteNotice | null = null;
+  notice: ToastNotice | null = null;
   private changing = false;
 
   constructor() {
@@ -50,13 +50,13 @@ export class FavoritesStore {
     }
   }
 
-  dismissNotice(notice: FavoriteNotice) {
+  dismissNotice(notice: ToastNotice) {
     if (this.notice === notice) {
       this.notice = null;
     }
   }
 
-  showNotice(kind: FavoriteNotice["kind"], message: string) {
+  showNotice(kind: ToastNotice["kind"], message: string) {
     this.notice = { kind, message, revision: (this.notice?.revision ?? 0) + 1 };
   }
 }

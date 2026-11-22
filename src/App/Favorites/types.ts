@@ -1,5 +1,5 @@
+import type { ToastNotice } from "~/ui-kit/Toast/types";
 import type { FavoriteActions, Show } from "../types";
-import type { FavoriteNotice } from "./FavoriteToast/types";
 
 export type FavoriteState =
   | { status: "loading" }
@@ -9,6 +9,6 @@ export type FavoriteState =
 export interface FavoritesProps {
   list: FavoriteState;
   favoriteActions: FavoriteActions;
-  notice: FavoriteNotice | null;
+  notice: ToastNotice | null;
   refresh: () => void;
 }

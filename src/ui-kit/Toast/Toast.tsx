@@ -1,7 +1,7 @@
-import styles from "./FavoriteToast.module.css";
-import type { FavoriteToastProps } from "./types";
+import styles from "./Toast.module.css";
+import type { ToastProps } from "./types";
 
-export const FavoriteToast = ({ notice }: FavoriteToastProps) => (
+export const Toast = ({ notice }: ToastProps) => (
   <div className={styles.root}>
     <div role="status">
       {notice?.kind === "success" && (

@@ -6,8 +6,6 @@ import type {
   SearchState,
 } from "../../types";
 import { getSearchView } from "./getSearchView";
-import { retrySearch } from "./state/retrySearch";
-import { selectSearchResults } from "./state/selectSearchResults";
 import { startSearch } from "./state/startSearch";
 
 export class SearchStore {
@@ -17,15 +15,8 @@ export class SearchStore {
 
   constructor(initial: SearchRequest) {
     this.query = initial.query;
-    this.search = startSearch(initial);
+    this.search = initial.query ? startSearch(initial) : { status: "idle" };
     makeAutoObservable(this, {}, { autoBind: true, deep: false });
-  }
-
-  get queryToCommit() {
-    const query = this.query.trim();
-    const committed =
-      this.search.status === "idle" ? "" : this.search.request.query;
-    return query === committed ? "" : query;
   }
 
   get pending() {
@@ -53,10 +44,8 @@ export class SearchStore {
     }
   }
 
-  commitQuery(query: string) {
-    if (query === this.queryToCommit) {
-      this.search = startSearch({ query, genre: null, page: 1 }, this.search);
-    }
+  setSearch(search: SearchState) {
+    this.search = search;
   }
 
   showLoading(pending: PendingSearch) {
@@ -66,32 +55,11 @@ export class SearchStore {
   }
 
   complete(pending: PendingSearch, result: SearchOutcome) {
-    if (pending === this.pending) {
-      this.search = { ...result, request: pending.request };
-      this.loadingFor = null;
+    if (pending !== this.pending) {
+      return;
     }
-  }
 
-  retry() {
-    this.search = retrySearch(this.search);
-  }
-
-  selectGenre(genre: string | null) {
-    this.selectResults(genre, 1);
-  }
-
-  goToPage(page: number) {
-    const genre = this.pending
-      ? this.pending.request.genre
-      : this.view.selectedGenre;
-    this.selectResults(genre, page);
-  }
-
-  private selectResults(genre: string | null, page: number) {
-    this.search = selectSearchResults(this.search, {
-      query: this.query.trim(),
-      genre,
-      page,
-    });
+    this.search = { ...result, request: pending.request };
+    this.loadingFor = null;
   }
 }

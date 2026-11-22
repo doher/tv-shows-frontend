@@ -6,13 +6,16 @@ export const selectSearchResults = (
   current: SearchState,
   selection: SearchRequest,
 ): SearchState => {
-  if (current.status === "pending") {
-    const { query, genre, page } = current.request;
-    const isAlreadyPending =
-      genre === selection.genre && page === selection.page;
-    if (query !== selection.query || isAlreadyPending) {
-      return current;
-    }
+  if (current.status === "idle" || current.request.query !== selection.query) {
+    return current;
+  }
+
+  const isAlreadyPending =
+    current.status === "pending" &&
+    current.request.genre === selection.genre &&
+    current.request.page === selection.page;
+  if (isAlreadyPending) {
+    return current;
   }
 
   const previous = getPreviousResults(current);
