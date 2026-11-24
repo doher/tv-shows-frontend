@@ -1,4 +1,4 @@
-import type { SearchRequest } from "~/types/search";
+import type { SearchRequest } from "~/App/types/search";
 
 const parsePage = (param: string) => {
   if (!/^\d+$/.test(param)) {

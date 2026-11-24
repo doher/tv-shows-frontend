@@ -1,7 +1,7 @@
-import { searchRequests } from "~/App/logic/search/SearchRequests";
-import { searchShows } from "~/App/tasks/searchShows";
-import { searchStore } from "~/stores/search";
-import type { SuccessfulSearch } from "~/types/search";
+import { searchRequests } from "~/App/logic/search/searchRequests";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import { searchShows } from "~/App/logic/tasks/searchShows";
+import type { SuccessfulSearch } from "~/App/types/search";
 
 type Selection = { genre: string | null } | { page: number };
 

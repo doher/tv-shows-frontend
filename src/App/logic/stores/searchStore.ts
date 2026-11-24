@@ -1,8 +1,8 @@
 import { makeAutoObservable } from "mobx";
-import type { SearchState } from "~/types/search";
-import { getPreviousResults } from "~/utils/getPreviousResults";
+import { getPreviousResults } from "~/App/logic/getPreviousResults";
+import type { SearchState } from "~/App/types/search";
 
-export class SearchStore {
+class SearchStore {
   query = "";
   search: SearchState = { status: "idle" };
 
@@ -35,3 +35,5 @@ export class SearchStore {
     this.search = search;
   }
 }
+
+export const searchStore = new SearchStore();

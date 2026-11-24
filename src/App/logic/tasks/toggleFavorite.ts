@@ -1,7 +1,7 @@
 import { action } from "mobx";
-import { favoritesStore } from "~/stores/favorites";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
 import { setFavorite } from "../api/setFavorite";
-import { favoritesRequests } from "../favorites/FavoritesRequests";
+import { favoritesRequests } from "../favorites/favoritesRequests";
 import { refreshFavorites } from "./refreshFavorites";
 
 export const toggleFavorite = action(

@@ -10,3 +10,10 @@ export type FavoriteState =
       removed?: Show | null;
       refreshFailed?: true;
     };
+
+export interface FavoriteActions {
+  ids: ReadonlySet<number>;
+  canChange: boolean;
+  isSaving: boolean;
+  onToggle: (show: Show) => void;
+}

@@ -5,17 +5,14 @@ export const Toast = ({ notice }: ToastProps) => (
   <div className={styles.root}>
     <div role="status">
       {notice?.kind === "success" && (
-        <p className={styles.message} key={notice.revision}>
+        <p className={styles.message} key={notice.id}>
           {notice.message}
         </p>
       )}
     </div>
     <div role="alert">
       {notice?.kind === "error" && (
-        <p
-          className={`${styles.message} ${styles.error}`}
-          key={notice.revision}
-        >
+        <p className={`${styles.message} ${styles.error}`} key={notice.id}>
           {notice.message}
         </p>
       )}

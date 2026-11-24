@@ -1,8 +1,8 @@
 import { action } from "mobx";
-import { favoritesStore } from "~/stores/favorites";
-import type { Show } from "~/types/show";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
+import type { Show } from "~/App/types/show";
 import { getFavoriteShows } from "../api/getFavoriteShows";
-import { favoritesRequests } from "../favorites/FavoritesRequests";
+import { favoritesRequests } from "../favorites/favoritesRequests";
 
 type RefreshFavoritesResult =
   | { status: "success"; shows: readonly Show[] }

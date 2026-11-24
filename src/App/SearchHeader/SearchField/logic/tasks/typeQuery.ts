@@ -1,6 +1,6 @@
-import { searchRequests } from "~/App/logic/search/SearchRequests";
-import { searchShows } from "~/App/tasks/searchShows";
-import { searchStore } from "~/stores/search";
+import { searchRequests } from "~/App/logic/search/searchRequests";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import { searchShows } from "~/App/logic/tasks/searchShows";
 
 export const typeQuery = (value: string) => {
   const previousQuery = searchStore.query.trim();

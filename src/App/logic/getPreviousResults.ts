@@ -1,4 +1,4 @@
-import type { SearchState } from "~/types/search";
+import type { SearchState } from "~/App/types/search";
 
 export const getPreviousResults = (current: SearchState) => {
   const previous = current.status === "pending" ? current.previous : current;

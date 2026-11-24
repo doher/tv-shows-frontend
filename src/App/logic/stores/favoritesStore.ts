@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import type { FavoriteState } from "~/types/favorites";
+import type { FavoriteState } from "~/App/types/favorites";
 
-export class FavoritesStore {
+class FavoritesStore {
   list: FavoriteState = { status: "loading" };
 
   constructor() {
@@ -23,3 +23,5 @@ export class FavoritesStore {
     this.list = list;
   }
 }
+
+export const favoritesStore = new FavoritesStore();

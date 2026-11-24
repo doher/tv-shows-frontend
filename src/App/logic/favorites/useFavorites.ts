@@ -1,5 +1,5 @@
-import { favoritesStore } from "~/stores/favorites";
-import type { Show } from "~/types/show";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
+import type { Show } from "~/App/types/show";
 import type { FavoritesProps } from "../../Favorites/types";
 import { refreshFavorites } from "../tasks/refreshFavorites";
 import { toggleFavorite } from "../tasks/toggleFavorite";
@@ -32,14 +32,16 @@ export const useFavorites = (): FavoritesProps => {
     showNotice("success", `«${show.name}» ${action}.`);
   };
 
+  const { list, ids, editableList } = favoritesStore;
   return {
-    list: favoritesStore.list,
+    list,
     panel,
     notice,
     refresh: refreshFavorites,
     favoriteActions: {
-      ids: favoritesStore.ids,
-      canChange: favoritesStore.editableList !== null,
+      ids,
+      canChange: editableList !== null,
+      isSaving: list.status === "ready" && list.changing === true,
       onToggle,
     },
   };

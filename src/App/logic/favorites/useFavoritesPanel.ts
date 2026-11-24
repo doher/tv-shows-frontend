@@ -1,6 +1,6 @@
 import { reaction } from "mobx";
 import { useEffect, useState } from "react";
-import { favoritesStore } from "~/stores/favorites";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
 import type { FavoritesPanelSnapshot } from "../../Favorites/types";
 import { refreshFavorites } from "../tasks/refreshFavorites";
 import { updateFavoritesPanel } from "./updateFavoritesPanel";

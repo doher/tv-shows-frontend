@@ -1,4 +1,4 @@
-import type { SearchPage, SearchState } from "~/types/search";
+import type { SearchPage, SearchState } from "~/App/types/search";
 import type { SearchStatus } from "../types";
 import { getDisplayedSearch } from "./getDisplayedSearch";
 

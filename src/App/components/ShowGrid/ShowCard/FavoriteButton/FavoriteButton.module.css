@@ -14,6 +14,10 @@
   cursor: default;
 }
 
+[aria-busy="true"] .button[aria-disabled="true"] {
+  opacity: 1;
+}
+
 @media (pointer: coarse) {
   .button {
     width: 44px;

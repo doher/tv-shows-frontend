@@ -1,5 +1,5 @@
-import type { SearchState } from "~/types/search";
-import type { FavoriteActions } from "../types";
+import type { FavoriteActions } from "~/App/types/favorites";
+import type { SearchState } from "~/App/types/search";
 
 export type SearchStatus = SearchState["status"] | "loading";
 

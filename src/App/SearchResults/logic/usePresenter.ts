@@ -1,4 +1,4 @@
-import { searchStore } from "~/stores/search";
+import { searchStore } from "~/App/logic/stores/searchStore";
 import { getSearchFeedback } from "./getSearchFeedback";
 import { getSearchView } from "./getSearchView";
 import { retrySearch } from "./tasks/retrySearch";

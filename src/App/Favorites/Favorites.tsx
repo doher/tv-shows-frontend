@@ -40,21 +40,24 @@ export const Favorites = (props: FavoritesProps) => {
           </div>
         )}
         {visibleShows && visibleShows.length > 0 && (
-          <ShowGrid
-            label="Избранные сериалы"
-            shows={visibleShows}
-            favoriteActions={favoriteActions}
-            cardRef={cardRef}
-          />
+          <>
+            <ShowGrid
+              label="Избранные сериалы"
+              shows={visibleShows}
+              favoriteActions={favoriteActions}
+              cardRef={cardRef}
+            />
+            <p
+              className={styles.message}
+              aria-hidden={visibleShows.length <= favoriteActions.ids.size}
+            >
+              Пока избранное открыто, нажмите на пустую звезду, чтобы вернуть
+              сериал.
+            </p>
+          </>
         )}
         {visibleShows?.length === 0 && (
           <p className={styles.message}>В избранном пока нет сериалов.</p>
-        )}
-        {visibleShows && visibleShows.length > favoriteActions.ids.size && (
-          <p className={styles.message}>
-            Пока избранное открыто, нажмите на пустую звезду, чтобы вернуть
-            сериал.
-          </p>
         )}
       </div>
       <Toast notice={notice} />

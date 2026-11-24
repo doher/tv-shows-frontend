@@ -23,6 +23,10 @@
   color: var(--kadr-muted);
 }
 
+.message[aria-hidden="true"] {
+  visibility: hidden;
+}
+
 .feedback {
   display: flex;
   flex-wrap: wrap;

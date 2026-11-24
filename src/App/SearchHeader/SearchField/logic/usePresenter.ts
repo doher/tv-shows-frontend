@@ -1,5 +1,5 @@
 import { type ChangeEvent, useId, useRef } from "react";
-import { searchStore } from "~/stores/search";
+import { searchStore } from "~/App/logic/stores/searchStore";
 import { typeQuery } from "./tasks/typeQuery";
 
 export const usePresenter = () => {

@@ -1,4 +1,4 @@
-import type { SearchRequest, SearchState } from "~/types/search";
+import type { SearchRequest, SearchState } from "~/App/types/search";
 
 export const getSearchUrlRequest = (search: SearchState): SearchRequest => {
   if (search.status === "idle") {

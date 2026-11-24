@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { favoritesStore } from "~/stores/favorites";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
 import { refreshFavorites } from "../tasks/refreshFavorites";
-import { favoritesRequests } from "./FavoritesRequests";
+import { favoritesRequests } from "./favoritesRequests";
 
 export const useFavoritesRefresh = () => {
   useEffect(() => {

@@ -1,5 +1,5 @@
-import { searchShows } from "~/App/tasks/searchShows";
-import { searchStore } from "~/stores/search";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import { searchShows } from "~/App/logic/tasks/searchShows";
 
 export const retrySearch = () => {
   const current = searchStore.search;

@@ -1,6 +1,6 @@
 import type { MouseEvent } from "react";
-import { changeSearchSelection } from "~/App/SearchResults/tasks/changeSearchSelection";
-import { searchStore } from "~/stores/search";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import { changeSearchSelection } from "~/App/SearchResults/logic/tasks/changeSearchSelection";
 import type { PaginationProps } from "../types";
 import { usePaginationFocus } from "./usePaginationFocus";
 

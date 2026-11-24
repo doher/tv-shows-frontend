@@ -1,8 +1,8 @@
 import { autorun } from "mobx";
 import { useLayoutEffect } from "react";
-import { searchShows } from "~/App/tasks/searchShows";
-import { searchStore } from "~/stores/search";
-import { searchRequests } from "../SearchRequests";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import { searchShows } from "~/App/logic/tasks/searchShows";
+import { searchRequests } from "../searchRequests";
 import { getSearchUrlRequest } from "./getSearchUrlRequest";
 import { readSearchUrl } from "./readSearchUrl";
 import { replaceSearchUrl } from "./replaceSearchUrl";

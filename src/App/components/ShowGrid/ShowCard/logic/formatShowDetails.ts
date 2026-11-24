@@ -1,4 +1,4 @@
-import type { Show } from "~/types/show";
+import type { Show } from "~/App/types/show";
 
 const PREMIERE_YEAR_LENGTH = 4;
 const MAX_VISIBLE_GENRES = 2;
