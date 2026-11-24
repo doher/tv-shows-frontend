@@ -1,12 +1,15 @@
 :global(html):has(.drawer[open]) {
+  --kadr-scroll-lock-offset: var(--favorites-scrollbar-width);
   overflow: hidden;
-  padding-inline-end: var(--favorites-scrollbar-width);
+  padding-inline-end: var(--kadr-scroll-lock-offset);
 }
 
 .drawer {
+  --drawer-width: min(460px, 100%);
   position: fixed;
-  inset: 0 0 0 auto;
-  width: min(460px, 100%);
+  inset: 0 calc(0px - var(--drawer-width)) 0 auto;
+  width: var(--drawer-width);
+  flex-direction: column;
   max-width: none;
   height: 100dvh;
   max-height: none;
@@ -18,17 +21,15 @@
   background: var(--kadr-bg);
   color: var(--kadr-text);
   box-shadow: -12px 0 44px #08040e70;
-  translate: 100% 0;
   transition:
-    translate 220ms ease-out,
+    right 220ms ease-out,
     display 220ms allow-discrete,
     overlay 220ms allow-discrete;
 }
 
 .drawer[open] {
   display: flex;
-  flex-direction: column;
-  translate: 0 0;
+  right: 0;
 }
 
 .drawer::backdrop {
@@ -45,7 +46,7 @@
 
 @starting-style {
   .drawer[open] {
-    translate: 100% 0;
+    right: calc(0px - var(--drawer-width));
   }
   .drawer[open]::backdrop {
     background-color: transparent;

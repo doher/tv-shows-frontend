@@ -1,9 +1,10 @@
 .root {
+  --right-gap: calc(20px + var(--kadr-scroll-lock-offset, 0px));
   position: fixed;
   z-index: 1;
-  inset: auto 20px max(20px, env(safe-area-inset-bottom)) auto;
+  inset: auto var(--right-gap) max(20px, env(safe-area-inset-bottom)) auto;
   width: max-content;
-  max-width: calc(100% - 40px);
+  max-width: min(26rem, calc(100% - 20px - var(--right-gap)));
   pointer-events: none;
 }
 
@@ -13,6 +14,7 @@
   border: 1px solid var(--kadr-accent);
   border-radius: 8px;
   background: var(--kadr-field);
+  color: var(--kadr-text);
   box-shadow: 0 4px 16px #0008;
   overflow-wrap: anywhere;
 }

@@ -18,6 +18,7 @@ export const Favorites = (props: FavoritesProps) => {
         panelId={dialog.panelId}
         onOpen={open}
       />
+      <Toast notice={dialog.isOpen ? null : props.notice} />
       <dialog
         className={styles.drawer}
         ref={dialog.ref}
@@ -31,9 +32,8 @@ export const Favorites = (props: FavoritesProps) => {
           closeButtonRef={focus.closeButton}
         />
         <FavoritesList {...list} cardRef={focus.cardRef} onRetry={retry} />
-        <Toast notice={dialog.isOpen ? props.notice : null} />
+        <Toast notice={props.notice} />
       </dialog>
-      <Toast notice={dialog.isOpen ? null : props.notice} />
     </>
   );
 };
