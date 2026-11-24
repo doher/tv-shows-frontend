@@ -87,24 +87,6 @@
   white-space: nowrap;
 }
 
-.info {
-  padding: 11px 12px 13px;
-  overflow-wrap: anywhere;
-}
-
-.title {
-  margin: 0;
-  font-size: clamp(16px, 2.4vw, 21px);
-  line-height: 1.14;
-  letter-spacing: -0.025em;
-}
-
-.metadata {
-  margin: 4px 0 0;
-  color: var(--kadr-muted);
-  font-size: 13px;
-}
-
 @container shows (max-width: 530px) {
   .card {
     display: grid;

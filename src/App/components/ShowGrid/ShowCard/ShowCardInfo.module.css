@@ -1,0 +1,28 @@
+.info {
+  display: grid;
+  grid-template-rows: auto 1lh;
+  row-gap: 4px;
+  padding: 11px 12px 13px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.title {
+  display: -webkit-box;
+  block-size: 2lh;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: clamp(16px, 2.4vw, 21px);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+}
+
+.metadata {
+  margin: 0;
+  overflow: hidden;
+  color: var(--kadr-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

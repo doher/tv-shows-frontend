@@ -1,6 +1,7 @@
 import { FavoriteButton } from "./FavoriteButton/FavoriteButton";
 import { usePresenter } from "./logic/usePresenter";
 import styles from "./ShowCard.module.css";
+import infoStyles from "./ShowCardInfo.module.css";
 import type { ShowCardProps } from "./types";
 
 export const ShowCard = (props: ShowCardProps) => {
@@ -44,9 +45,15 @@ export const ShowCard = (props: ShowCardProps) => {
             </span>
           )}
         </div>
-        <div className={styles.info}>
-          <h3 className={styles.title}>{show.name}</h3>
-          {metadata && <p className={styles.metadata}>{metadata}</p>}
+        <div className={infoStyles.info}>
+          <h3 className={infoStyles.title} title={show.name}>
+            {show.name}
+          </h3>
+          {metadata && (
+            <p className={infoStyles.metadata} title={metadata}>
+              {metadata}
+            </p>
+          )}
         </div>
       </a>
       <FavoriteButton
