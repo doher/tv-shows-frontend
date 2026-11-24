@@ -1,11 +1,12 @@
 import type { MouseEvent } from "react";
 import { searchStore } from "~/App/logic/stores/searchStore";
+import { getSelectableResults } from "~/App/SearchResults/logic/getSelectableResults";
 import { changeSearchSelection } from "~/App/SearchResults/logic/tasks/changeSearchSelection";
 import type { PaginationProps } from "../types";
 import { usePaginationFocus } from "./usePaginationFocus";
 
 export const usePresenter = ({ page, pageCount }: PaginationProps) => {
-  const displayed = searchStore.selectableResults;
+  const displayed = getSelectableResults(searchStore.search, searchStore.query);
   const { currentPageButton, handleArrowBlur, rememberArrowFocus } =
     usePaginationFocus(page, pageCount);
 

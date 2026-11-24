@@ -11,8 +11,9 @@ export const App = observer(() => {
   return (
     <main className={styles.root}>
       <div className={styles.shell}>
-        <SearchHeader />
-        <Favorites {...favorites} />
+        <SearchHeader>
+          <Favorites {...favorites} />
+        </SearchHeader>
         <SearchResults favoriteActions={favorites.favoriteActions} />
       </div>
     </main>

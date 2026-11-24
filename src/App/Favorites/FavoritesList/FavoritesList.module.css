@@ -1,0 +1,23 @@
+.body {
+  container: shows / inline-size;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+  padding: 18px 20px max(20px, env(safe-area-inset-bottom));
+}
+
+.message {
+  margin: 0;
+  color: var(--kadr-muted);
+}
+
+.feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}

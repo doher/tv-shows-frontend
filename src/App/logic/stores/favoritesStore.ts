@@ -1,26 +1,29 @@
 import { makeAutoObservable } from "mobx";
 import type { FavoriteState } from "~/App/types/favorites";
+import type { Show } from "~/App/types/show";
 
 class FavoritesStore {
-  list: FavoriteState = { status: "loading" };
+  private savedList: FavoriteState = { status: "loading" };
+  private pendingChanges: ReadonlyMap<number, Show | null> = new Map();
 
   constructor() {
-    makeAutoObservable(this, {}, { autoBind: true, deep: false });
+    makeAutoObservable(this, {}, { deep: false });
   }
 
-  get ids(): ReadonlySet<number> {
-    const shows = this.list.status === "ready" ? this.list.shows : [];
-    return new Set(shows.map(({ id }) => id));
+  get confirmed() {
+    return this.savedList;
   }
 
-  get editableList() {
-    return this.list.status === "ready" && !this.list.changing
-      ? this.list
-      : null;
+  setConfirmed(list: FavoriteState) {
+    this.savedList = list;
   }
 
-  setList(list: FavoriteState) {
-    this.list = list;
+  get changes() {
+    return this.pendingChanges;
+  }
+
+  setChanges(changes: ReadonlyMap<number, Show | null>) {
+    this.pendingChanges = changes;
   }
 }
 

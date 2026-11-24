@@ -1,24 +1,23 @@
-import { useId } from "react";
 import type { FavoritesProps } from "../types";
+import { useDrawerDialog } from "./useDrawerDialog";
+import { useDrawerShows } from "./useDrawerShows";
 import { useRemovedCardFocus } from "./useRemovedCardFocus";
 
-export const usePresenter = ({ list, refresh }: FavoritesProps) => {
-  const panelId = useId();
-  const { trigger, cardRef } = useRemovedCardFocus();
+export const usePresenter = (props: FavoritesProps) => {
+  const { reset, clear, count, ...list } = useDrawerShows(props);
+  const { showModal, ...dialog } = useDrawerDialog(clear);
+  const focus = useRemovedCardFocus();
+
+  const open = () => {
+    reset();
+    showModal();
+    props.refresh();
+  };
 
   const retry = () => {
-    trigger.current?.focus();
-    refresh();
+    focus.closeButton.current?.focus();
+    props.refresh();
   };
 
-  return {
-    count: list.status === "ready" ? list.shows.length : null,
-    loadFailed:
-      list.status === "error" ||
-      (list.status === "ready" && list.refreshFailed),
-    cardRef,
-    panelId,
-    retry,
-    trigger,
-  };
+  return { count, list, dialog, focus, open, retry };
 };

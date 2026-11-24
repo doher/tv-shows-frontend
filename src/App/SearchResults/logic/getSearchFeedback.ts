@@ -1,24 +1,16 @@
-import type { getSearchView } from "./getSearchView";
+import type { CompletedSearch } from "~/App/types/search";
 
-export const getSearchFeedback = ({
-  status,
-  errorReason,
-  resultRange: { total },
-}: ReturnType<typeof getSearchView>) => {
-  if (status === "error") {
+export const getSearchFeedback = (search: CompletedSearch | null) => {
+  if (search?.status === "error") {
     const message =
-      errorReason === "rateLimited"
+      search.errorReason === "rateLimited"
         ? "Слишком много запросов. Попробуйте через несколько секунд."
         : "Не удалось загрузить сериалы. Попробуйте ещё раз.";
 
     return { kind: "error", message } as const;
   }
 
-  if (status === "loading") {
-    return { kind: "status", message: "Ищем сериалы…" } as const;
-  }
-
-  if (status === "success" && total === 0) {
+  if (search?.status === "success" && search.results.resultRange.total === 0) {
     return {
       kind: "status",
       message: "Ничего не найдено. Попробуйте другое название.",

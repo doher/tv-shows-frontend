@@ -1,0 +1,17 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 6px 12px;
+  font: inherit;
+}
+
+.star {
+  color: var(--kadr-amber);
+}
+
+.count {
+  color: var(--kadr-muted);
+  font-variant-numeric: tabular-nums;
+}

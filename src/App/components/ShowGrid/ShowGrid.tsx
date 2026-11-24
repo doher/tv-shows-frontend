@@ -8,11 +8,7 @@ export const ShowGrid = ({
   favoriteActions,
   cardRef,
 }: ShowGridProps) => (
-  <ul
-    className={styles.grid}
-    aria-label={label}
-    aria-busy={favoriteActions.isSaving || undefined}
-  >
+  <ul className={styles.grid} aria-label={label}>
     {shows.map((show) => (
       <ShowCard
         key={show.id}

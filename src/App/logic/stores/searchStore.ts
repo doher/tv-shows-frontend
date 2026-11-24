@@ -1,38 +1,28 @@
 import { makeAutoObservable } from "mobx";
-import { getPreviousResults } from "~/App/logic/getPreviousResults";
 import type { SearchState } from "~/App/types/search";
 
 class SearchStore {
-  query = "";
-  search: SearchState = { status: "idle" };
+  private queryValue = "";
+  private searchValue: SearchState = { status: "idle" };
 
   constructor() {
-    makeAutoObservable(this, {}, { autoBind: true, deep: false });
+    makeAutoObservable(this, {}, { deep: false });
   }
 
-  get pending() {
-    const current = this.search;
-    if (current.status !== "pending") {
-      return null;
-    }
-
-    return current.request.query === this.query.trim() ? current : null;
-  }
-
-  get selectableResults() {
-    const displayed = getPreviousResults(this.search);
-    return displayed?.request.query === this.query.trim() ? displayed : null;
+  get query() {
+    return this.queryValue;
   }
 
   setQuery(value: string) {
-    this.query = value;
-    if (!value.trim()) {
-      this.search = { status: "idle" };
-    }
+    this.queryValue = value;
   }
 
-  setSearch(search: SearchState) {
-    this.search = search;
+  get search() {
+    return this.searchValue;
+  }
+
+  setSearch(value: SearchState) {
+    this.searchValue = value;
   }
 }
 

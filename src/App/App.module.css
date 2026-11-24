@@ -1,9 +1,15 @@
+:root {
+  --kadr-bg: #100b1b;
+  --favorites-scrollbar-width: 0px;
+  scrollbar-color: #9278a5 var(--kadr-bg);
+  scrollbar-width: thin;
+}
+
 :global(body) {
   margin: 0;
 }
 
 .root {
-  --kadr-bg: #100b1b;
   --kadr-field: #1b132b;
   --kadr-text: #fbf4ff;
   --kadr-muted: #c4b3d5;

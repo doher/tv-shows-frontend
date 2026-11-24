@@ -1,13 +1,16 @@
 import { useLayoutEffect, useRef } from "react";
-import type { SearchStatus } from "../types";
+import type { SearchState } from "~/App/types/search";
 
-export const useRetryFocus = (status: SearchStatus, onRetry: () => void) => {
+export const useRetryFocus = (
+  status: SearchState["status"],
+  onRetry: () => void,
+) => {
   const heading = useRef<HTMLHeadingElement>(null);
   const retryButton = useRef<HTMLButtonElement>(null);
   const waitingForRetry = useRef(false);
 
   useLayoutEffect(() => {
-    if (status === "pending" || status === "loading") {
+    if (status === "pending") {
       return;
     }
 

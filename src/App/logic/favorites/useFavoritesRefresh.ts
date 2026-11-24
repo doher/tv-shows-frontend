@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { favoritesStore } from "~/App/logic/stores/favoritesStore";
 import { refreshFavorites } from "../tasks/refreshFavorites";
 import { favoritesRequests } from "./favoritesRequests";
 
@@ -18,7 +17,6 @@ export const useFavoritesRefresh = () => {
       removeEventListener("focus", refreshWhenVisible);
       document.removeEventListener("visibilitychange", refreshWhenVisible);
       favoritesRequests.cancel();
-      favoritesStore.setList({ status: "loading" });
     };
   }, []);
 };

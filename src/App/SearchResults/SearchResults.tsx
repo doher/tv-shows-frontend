@@ -9,42 +9,51 @@ import type { SearchResultsProps } from "./types";
 
 export const SearchResults = observer(
   ({ favoriteActions }: SearchResultsProps) => {
-    const { view, heading, feedback } = usePresenter();
-    if (view.status === "idle") {
+    const { search, heading, feedback, isBusy } = usePresenter();
+    if (!search) {
       return null;
     }
 
-    const { first, last, total } = view.resultRange;
+    const results = search.status === "success" ? search.results : null;
+    const range = results?.resultRange;
 
     return (
-      <section className={styles.root} aria-labelledby="results-title">
+      <section
+        className={styles.root}
+        aria-labelledby="results-title"
+        aria-busy={isBusy}
+      >
         <div className={styles.heading}>
           <h2 id="results-title" ref={heading} tabIndex={-1}>
             Результаты
           </h2>
           <p className={styles.count} role="status">
-            {total > 0 && `${first}–${last} из ${total}`}
+            {range &&
+              range.total > 0 &&
+              `${range.first}–${range.last} из ${range.total}`}
           </p>
         </div>
 
         {feedback !== null && <SearchFeedback {...feedback} />}
 
-        {total > 0 && (
+        {results && results.resultRange.total > 0 && (
           <>
             <GenreFilters
-              genres={view.genres}
-              selectedGenre={view.selectedGenre}
+              genres={results.genres}
+              selectedGenre={results.selectedGenre}
             />
             <ShowGrid
               label="Найденные сериалы"
-              shows={view.shows}
+              shows={results.shows}
               favoriteActions={favoriteActions}
             />
           </>
         )}
 
         <footer className={styles.footer}>
-          <Pagination page={view.page} pageCount={view.pageCount} />
+          {results && (
+            <Pagination page={results.page} pageCount={results.pageCount} />
+          )}
           <a href="https://www.tvmaze.com/" target="_blank" rel="noreferrer">
             Данные TVmaze <span aria-hidden="true">↗</span>
           </a>

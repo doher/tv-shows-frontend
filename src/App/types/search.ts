@@ -12,14 +12,14 @@ export type SearchRequest = {
   page: number;
 };
 
-type CompletedSearch = { request: SearchRequest } & SearchOutcome;
+export type CompletedSearch = { request: SearchRequest } & SearchOutcome;
 
 export type SuccessfulSearch = Extract<CompletedSearch, { status: "success" }>;
 
 export type PendingSearch = {
   status: "pending";
   request: SearchRequest;
-  previous: SuccessfulSearch | null;
+  previous: CompletedSearch | null;
 };
 
 export type SearchState = { status: "idle" } | PendingSearch | CompletedSearch;

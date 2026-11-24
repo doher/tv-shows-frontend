@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 
 export const useRemovedCardFocus = () => {
-  const trigger = useRef<HTMLButtonElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
   const cardRef = useCallback((card: HTMLLIElement | null) => {
     if (!card) {
       return;
@@ -9,10 +9,10 @@ export const useRemovedCardFocus = () => {
 
     return () => {
       if (card.contains(document.activeElement)) {
-        trigger.current?.focus();
+        closeButton.current?.focus();
       }
     };
   }, []);
 
-  return { trigger, cardRef };
+  return { closeButton, cardRef };
 };

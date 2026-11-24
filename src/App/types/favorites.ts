@@ -6,14 +6,11 @@ export type FavoriteState =
   | {
       status: "ready";
       shows: readonly Show[];
-      changing?: true;
-      removed?: Show | null;
       refreshFailed?: true;
     };
 
 export interface FavoriteActions {
   ids: ReadonlySet<number>;
   canChange: boolean;
-  isSaving: boolean;
   onToggle: (show: Show) => void;
 }

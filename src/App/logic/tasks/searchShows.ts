@@ -1,11 +1,12 @@
 import { searchStore } from "~/App/logic/stores/searchStore";
 import type { SearchRequest } from "~/App/types/search";
 import { getSearchPage } from "../api/getSearchPage";
-import { getPreviousResults } from "../getPreviousResults";
+import { getDisplayedSearch } from "../search/getDisplayedSearch";
 import { searchRequests } from "../search/searchRequests";
 
 export const searchShows = async (request: SearchRequest) => {
-  if (request.query !== searchStore.query.trim()) {
+  const { query, search } = searchStore;
+  if (request.query !== query.trim()) {
     return null;
   }
 
@@ -13,7 +14,7 @@ export const searchShows = async (request: SearchRequest) => {
   searchStore.setSearch({
     status: "pending",
     request,
-    previous: getPreviousResults(searchStore.search),
+    previous: getDisplayedSearch(search, query),
   });
 
   const result = await getSearchPage(request, signal);

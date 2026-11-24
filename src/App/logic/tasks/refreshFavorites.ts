@@ -1,5 +1,6 @@
-import { action } from "mobx";
+import { action, runInAction } from "mobx";
 import { favoritesStore } from "~/App/logic/stores/favoritesStore";
+import type { FavoriteState } from "~/App/types/favorites";
 import type { Show } from "~/App/types/show";
 import { getFavoriteShows } from "../api/getFavoriteShows";
 import { favoritesRequests } from "../favorites/favoritesRequests";
@@ -17,9 +18,8 @@ export const refreshFavorites = action(
     }
 
     const signal = favoritesRequests.start();
-    const list = favoritesStore.list;
-    if (list.status === "error") {
-      favoritesStore.setList({ status: "loading" });
+    if (favoritesStore.confirmed.status === "error") {
+      favoritesStore.setConfirmed({ status: "loading" });
     }
 
     const shows = await getFavoriteShows(signal);
@@ -27,16 +27,19 @@ export const refreshFavorites = action(
       return { status: "cancelled" };
     }
 
-    if (shows === null) {
-      favoritesStore.setList(
-        list.status === "ready"
-          ? { ...list, refreshFailed: true }
-          : { status: "error" },
-      );
-      return { status: "error" };
-    }
+    return runInAction((): RefreshFavoritesResult => {
+      if (shows !== null) {
+        favoritesStore.setConfirmed({ status: "ready", shows });
+        return { status: "success", shows };
+      }
 
-    favoritesStore.setList({ status: "ready", shows });
-    return { status: "success", shows };
+      const { confirmed } = favoritesStore;
+      const stateAfterRefreshFailure: FavoriteState =
+        confirmed.status === "ready"
+          ? { ...confirmed, refreshFailed: true }
+          : { status: "error" };
+      favoritesStore.setConfirmed(stateAfterRefreshFailure);
+      return { status: "error" };
+    });
   },
 );

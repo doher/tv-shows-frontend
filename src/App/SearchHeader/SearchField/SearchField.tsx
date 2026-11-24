@@ -3,14 +3,15 @@ import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchField.module.css";
 
 export const SearchField = observer(() => {
-  const { query, inputId, inputRef, changeQuery, clearQuery } = usePresenter();
+  const { query, inputId, inputRef, isBusy, changeQuery, clearQuery } =
+    usePresenter();
 
   return (
     <>
       <h1 className={styles.title}>
         <label htmlFor={inputId}>Поиск сериалов</label>
       </h1>
-      <search className={styles.search}>
+      <search className={styles.search} aria-busy={isBusy}>
         <svg
           className={styles.searchIcon}
           aria-hidden="true"

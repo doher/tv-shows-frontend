@@ -14,10 +14,6 @@
   cursor: default;
 }
 
-[aria-busy="true"] .button[aria-disabled="true"] {
-  opacity: 1;
-}
-
 @media (pointer: coarse) {
   .button {
     width: 44px;
@@ -25,7 +21,7 @@
   }
 }
 
-@media (max-width: 530px) {
+@container shows (max-width: 530px) {
   .button {
     inset: auto auto 10px 10px;
   }

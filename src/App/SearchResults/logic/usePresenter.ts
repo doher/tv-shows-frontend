@@ -1,25 +1,27 @@
+import { getDisplayedSearch } from "~/App/logic/search/getDisplayedSearch";
+import { getPendingSearch } from "~/App/logic/search/getPendingSearch";
 import { searchStore } from "~/App/logic/stores/searchStore";
 import { getSearchFeedback } from "./getSearchFeedback";
-import { getSearchView } from "./getSearchView";
 import { retrySearch } from "./tasks/retrySearch";
 import { useRetryFocus } from "./useRetryFocus";
-import { useSearchLoading } from "./useSearchLoading";
 
 export const usePresenter = () => {
-  const isLoading = useSearchLoading(searchStore.pending);
-  const view = getSearchView(searchStore.search, isLoading);
+  const { search, query } = searchStore;
+  const displayed = getDisplayedSearch(search, query);
+  const isBusy = getPendingSearch(search, query) !== null;
   const { heading, retryButton, retry } = useRetryFocus(
-    view.status,
+    search.status,
     retrySearch,
   );
-  const feedback = getSearchFeedback(view);
+  const feedback = getSearchFeedback(displayed);
 
   return {
-    view,
+    search: displayed,
     heading,
+    isBusy,
     feedback:
       feedback?.kind === "error"
-        ? { ...feedback, onRetry: retry, retryButton }
+        ? { ...feedback, onRetry: retry, retryButton, isRetrying: isBusy }
         : feedback,
   };
 };

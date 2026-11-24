@@ -3,7 +3,7 @@
   z-index: 1;
   inset: auto 20px max(20px, env(safe-area-inset-bottom)) auto;
   width: max-content;
-  max-width: calc(100vw - 40px);
+  max-width: calc(100% - 40px);
   pointer-events: none;
 }
 
