@@ -21,7 +21,7 @@
   }
 }
 
-@media (max-width: 530px) {
+@container shows (max-width: 530px) {
   .button {
     inset: auto auto 10px 10px;
   }

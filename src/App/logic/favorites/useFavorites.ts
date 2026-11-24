@@ -1,32 +1,27 @@
-import { useState } from "react";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
+import type { Show } from "~/App/types/show";
 import type { FavoritesProps } from "../../Favorites/types";
-import type { Show } from "../../types";
+import { refreshFavorites } from "../tasks/refreshFavorites";
 import { toggleFavorite } from "../tasks/toggleFavorite";
-import { FavoritesRequests } from "./FavoritesRequests";
-import { FavoritesStore } from "./FavoritesStore";
+import { applyFavoriteChanges } from "./applyFavoriteChanges";
 import { useFavoriteNotice } from "./useFavoriteNotice";
-import { useFavoritesPanel } from "./useFavoritesPanel";
 import { useFavoritesRefresh } from "./useFavoritesRefresh";
 
 export const useFavorites = (): FavoritesProps => {
-  const [store] = useState(() => new FavoritesStore());
-  const [requests] = useState(() => new FavoritesRequests());
-  const refresh = useFavoritesRefresh(store, requests);
+  useFavoritesRefresh();
   const { notice, showNotice } = useFavoriteNotice();
-  const { panel, expectRemoval } = useFavoritesPanel(store, refresh);
 
   const onToggle = async (show: Show) => {
-    if (store.canChange && store.ids.has(show.id)) {
-      expectRemoval(show.id);
-    }
-
-    const change = await toggleFavorite(store, requests, show.id);
+    const change = await toggleFavorite(show);
     if (change === null) {
       return;
     }
 
     if (change === "failed") {
-      showNotice("error", "Не удалось обновить избранное. Попробуйте ещё раз.");
+      showNotice(
+        "error",
+        `Не удалось изменить избранное для «${show.name}». Попробуйте ещё раз.`,
+      );
       return;
     }
 
@@ -35,14 +30,27 @@ export const useFavorites = (): FavoritesProps => {
     showNotice("success", `«${show.name}» ${action}.`);
   };
 
+  let list = favoritesStore.confirmed;
+  const ids = new Set<number>();
+  if (list.status === "ready") {
+    const pendingChanges = favoritesStore.changes;
+    if (pendingChanges.size > 0) {
+      const shows = applyFavoriteChanges(list.shows, pendingChanges);
+      list = { ...list, shows };
+    }
+
+    for (const show of list.shows) {
+      ids.add(show.id);
+    }
+  }
+
   return {
-    list: store.list,
-    panel,
+    list,
     notice,
-    refresh,
+    refresh: refreshFavorites,
     favoriteActions: {
-      ids: store.ids,
-      canChange: store.canChange,
+      ids,
+      canChange: list.status === "ready",
       onToggle,
     },
   };

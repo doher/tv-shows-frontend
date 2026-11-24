@@ -1,34 +1,22 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { refreshFavorites } from "../tasks/refreshFavorites";
-import type { FavoritesRequests } from "./FavoritesRequests";
-import type { FavoritesStore } from "./FavoritesStore";
+import { favoritesRequests } from "./favoritesRequests";
 
-export const useFavoritesRefresh = (
-  store: FavoritesStore,
-  requests: FavoritesRequests,
-) => {
-  const refresh = useCallback(
-    () => refreshFavorites(store, requests),
-    [store, requests],
-  );
-
+export const useFavoritesRefresh = () => {
   useEffect(() => {
     const refreshWhenVisible = () => {
       if (document.visibilityState === "visible") {
-        void refresh();
+        void refreshFavorites();
       }
     };
 
-    void refresh();
+    void refreshFavorites();
     addEventListener("focus", refreshWhenVisible);
     document.addEventListener("visibilitychange", refreshWhenVisible);
     return () => {
       removeEventListener("focus", refreshWhenVisible);
       document.removeEventListener("visibilitychange", refreshWhenVisible);
-      requests.cancel();
-      store.finishChange(null);
+      favoritesRequests.cancel();
     };
-  }, [store, requests, refresh]);
-
-  return refresh;
+  }, []);
 };

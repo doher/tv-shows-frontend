@@ -6,5 +6,6 @@ export type SearchFeedbackProps =
       kind: "error";
       message: string;
       onRetry: () => void;
+      isRetrying: boolean;
       retryButton: Ref<HTMLButtonElement>;
     };

@@ -1,6 +1,6 @@
 const DEBOUNCE_MS = 350;
 
-export class SearchRequests {
+class SearchRequests {
   private debounceTimer?: ReturnType<typeof setTimeout>;
   private active?: AbortController;
 
@@ -15,15 +15,11 @@ export class SearchRequests {
     return this.active.signal;
   }
 
-  finish(signal: AbortSignal) {
-    if (this.active?.signal === signal) {
-      this.active = undefined;
-    }
-  }
-
   cancel() {
     clearTimeout(this.debounceTimer);
     this.active?.abort();
     this.active = undefined;
   }
 }
+
+export const searchRequests = new SearchRequests();

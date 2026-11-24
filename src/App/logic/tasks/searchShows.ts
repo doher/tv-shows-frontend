@@ -1,23 +1,27 @@
-import type { PendingSearch, SearchOutcome } from "../../types";
+import { searchStore } from "~/App/logic/stores/searchStore";
+import type { SearchRequest } from "~/App/types/search";
 import { getSearchPage } from "../api/getSearchPage";
-import type { SearchRequests } from "../search/SearchRequests";
-import type { SearchStore } from "../search/SearchStore";
+import { getDisplayedSearch } from "../search/getDisplayedSearch";
+import { searchRequests } from "../search/searchRequests";
 
-export const searchShows = async (
-  store: SearchStore,
-  requests: SearchRequests,
-  pending: PendingSearch,
-): Promise<SearchOutcome | null> => {
-  if (!store.begin(pending)) {
+export const searchShows = async (request: SearchRequest) => {
+  const { query, search } = searchStore;
+  if (request.query !== query.trim()) {
     return null;
   }
 
-  const signal = requests.start();
-  const result = await getSearchPage(pending.request, signal);
-  requests.finish(signal);
-  if (signal.aborted || !store.complete(pending, result)) {
+  const signal = searchRequests.start();
+  searchStore.setSearch({
+    status: "pending",
+    request,
+    previous: getDisplayedSearch(search, query),
+  });
+
+  const result = await getSearchPage(request, signal);
+  if (signal.aborted) {
     return null;
   }
 
+  searchStore.setSearch({ ...result, request });
   return result;
 };

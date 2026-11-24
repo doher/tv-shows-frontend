@@ -16,7 +16,8 @@ export const SearchFeedback = (props: SearchFeedbackProps) => {
         {message}
         <Button
           className={styles.retry}
-          onClick={props.onRetry}
+          onClick={props.isRetrying ? undefined : props.onRetry}
+          aria-disabled={props.isRetrying}
           ref={props.retryButton}
         >
           Повторить поиск

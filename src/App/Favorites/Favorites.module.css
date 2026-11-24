@@ -1,31 +1,60 @@
-.root {
-  margin-bottom: 17px;
+:global(html):has(.drawer[open]) {
+  overflow: hidden;
+  padding-inline-end: var(--favorites-scrollbar-width);
 }
 
-.toggle {
-  min-height: 44px;
-  padding: 6px 13px;
-  font: inherit;
-  font-weight: 650;
-}
-
-.toggle span {
-  margin-inline-end: 3px;
-  color: var(--kadr-amber);
-}
-
-.panel {
-  margin-top: 13px;
-}
-
-.message {
+.drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(460px, 100%);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
   margin: 0;
-  color: var(--kadr-muted);
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-inline-start: 1px solid var(--kadr-line);
+  background: var(--kadr-bg);
+  color: var(--kadr-text);
+  box-shadow: -12px 0 44px #08040e70;
+  translate: 100% 0;
+  transition:
+    translate 220ms ease-out,
+    display 220ms allow-discrete,
+    overlay 220ms allow-discrete;
 }
 
-.feedback {
+.drawer[open] {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  translate: 0 0;
+}
+
+.drawer::backdrop {
+  background-color: transparent;
+  transition:
+    background-color 220ms ease,
+    display 220ms allow-discrete,
+    overlay 220ms allow-discrete;
+}
+
+.drawer[open]::backdrop {
+  background-color: #09050fb8;
+}
+
+@starting-style {
+  .drawer[open] {
+    translate: 100% 0;
+  }
+  .drawer[open]::backdrop {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer::backdrop {
+    transition: none;
+  }
 }

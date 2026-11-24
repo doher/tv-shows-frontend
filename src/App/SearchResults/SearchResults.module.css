@@ -1,4 +1,5 @@
 .root {
+  container: shows / inline-size;
   padding-top: 17px;
   border-top: 1px solid transparent;
   border-image: linear-gradient(90deg, #a05386, #653875 51%, #32223f) 1;

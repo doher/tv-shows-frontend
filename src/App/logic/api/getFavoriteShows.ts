@@ -1,4 +1,4 @@
-import type { Show } from "../../types";
+import type { Show } from "~/App/types/show";
 import { getApiUrl } from "./getApiUrl";
 
 export const getFavoriteShows = async (

@@ -1,34 +1,19 @@
-import { setFavorite } from "../api/setFavorite";
-import type { FavoritesRequests } from "../favorites/FavoritesRequests";
-import type { FavoritesStore } from "../favorites/FavoritesStore";
-import { refreshFavorites } from "./refreshFavorites";
+import { action } from "mobx";
+import { saveFavorite } from "~/App/logic/favorites/saveFavorite";
+import { favoritesStore } from "~/App/logic/stores/favoritesStore";
+import type { Show } from "~/App/types/show";
 
-export const toggleFavorite = async (
-  store: FavoritesStore,
-  requests: FavoritesRequests,
-  id: number,
-): Promise<"added" | "removed" | "failed" | null> => {
-  const shouldFavorite = store.beginChange(id);
-  if (shouldFavorite === null) {
+export const toggleFavorite = action(async (show: Show) => {
+  const { confirmed, changes } = favoritesStore;
+  if (confirmed.status !== "ready") {
     return null;
   }
 
-  const signal = requests.start();
-  const result = await setFavorite(id, shouldFavorite, signal);
-  if (!requests.finish(signal)) {
-    return null;
+  let currentFavorite = changes.get(show.id);
+  if (currentFavorite === undefined) {
+    currentFavorite = confirmed.shows.find(({ id }) => id === show.id);
   }
 
-  if (result === null) {
-    store.finishChange(null);
-    void refreshFavorites(store, requests);
-    return "failed";
-  }
-
-  store.finishChange(result.shows, result.removed);
-  if (!result.changed) {
-    return null;
-  }
-
-  return shouldFavorite ? "added" : "removed";
-};
+  const nextFavorite = currentFavorite ? null : show;
+  return saveFavorite(show.id, nextFavorite);
+});

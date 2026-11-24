@@ -1,13 +1,15 @@
-import type { SearchState } from "../../types";
+import type { SearchState } from "~/App/types/search";
 
-export const getDisplayedSearch = (
-  search: SearchState,
-  isLoadingVisible: boolean,
-) => {
-  if (search.status !== "pending" || search.previous === null) {
-    return search;
+export const getDisplayedSearch = (search: SearchState, query: string) => {
+  const completed = search.status === "pending" ? search.previous : search;
+  if (!completed || completed.status === "idle") {
+    return null;
   }
 
-  const isSameQuery = search.previous.request.query === search.request.query;
-  return isSameQuery || !isLoadingVisible ? search.previous : search;
+  const hasCards =
+    completed.status === "success" && completed.results.shows.length > 0;
+  const shouldDisplaySearch =
+    hasCards || completed.request.query === query.trim();
+
+  return shouldDisplaySearch ? completed : null;
 };

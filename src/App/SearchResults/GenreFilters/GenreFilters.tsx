@@ -2,11 +2,7 @@ import { GenreChip } from "./GenreChip/GenreChip";
 import styles from "./GenreFilters.module.css";
 import type { GenreFiltersProps } from "./types";
 
-export const GenreFilters = ({
-  genres,
-  selectedGenre,
-  onGenreChange,
-}: GenreFiltersProps) => {
+export const GenreFilters = ({ genres, selectedGenre }: GenreFiltersProps) => {
   if (genres.length === 0) {
     return null;
   }
@@ -17,8 +13,7 @@ export const GenreFilters = ({
         <GenreChip
           key={genre === null ? "all" : `genre:${genre}`}
           genre={genre}
-          selectedGenre={selectedGenre}
-          onGenreChange={onGenreChange}
+          isSelected={genre === selectedGenre}
         />
       ))}
     </fieldset>

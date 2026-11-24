@@ -1,19 +1,27 @@
-import type { SearchResultsProps } from "../types";
+import { getDisplayedSearch } from "~/App/logic/search/getDisplayedSearch";
+import { getPendingSearch } from "~/App/logic/search/getPendingSearch";
+import { searchStore } from "~/App/logic/stores/searchStore";
 import { getSearchFeedback } from "./getSearchFeedback";
+import { retrySearch } from "./tasks/retrySearch";
 import { useRetryFocus } from "./useRetryFocus";
 
-export const usePresenter = (props: SearchResultsProps) => {
+export const usePresenter = () => {
+  const { search, query } = searchStore;
+  const displayed = getDisplayedSearch(search, query);
+  const isBusy = getPendingSearch(search, query) !== null;
   const { heading, retryButton, retry } = useRetryFocus(
-    props.status,
-    props.onRetry,
+    search.status,
+    retrySearch,
   );
-  const feedback = getSearchFeedback(props);
+  const feedback = getSearchFeedback(displayed);
 
   return {
+    search: displayed,
     heading,
+    isBusy,
     feedback:
       feedback?.kind === "error"
-        ? { ...feedback, onRetry: retry, retryButton }
+        ? { ...feedback, onRetry: retry, retryButton, isRetrying: isBusy }
         : feedback,
   };
 };

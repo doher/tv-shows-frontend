@@ -1,13 +1,8 @@
 import { useFavorites } from "./favorites/useFavorites";
-import { useSearch } from "./search/useSearch";
+import { useSyncSearchUrl } from "./search/url/useSyncSearchUrl";
 
 export const usePresenter = () => {
-  const { header: searchHeader, results } = useSearch();
+  useSyncSearchUrl();
   const favorites = useFavorites();
-  const searchResults = results && {
-    ...results,
-    favoriteActions: favorites.favoriteActions,
-  };
-
-  return { searchHeader, favorites, searchResults };
+  return { favorites };
 };

@@ -1,3 +1,5 @@
-import type { SearchFieldProps } from "./SearchField/types";
+import type { ReactNode } from "react";
 
-export type SearchHeaderProps = SearchFieldProps;
+export interface SearchHeaderProps {
+  children: ReactNode;
+}

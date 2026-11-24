@@ -1,17 +1,17 @@
+import { observer } from "mobx-react-lite";
 import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchField.module.css";
-import type { SearchFieldProps } from "./types";
 
-export const SearchField = ({ query, onQueryChange }: SearchFieldProps) => {
-  const { inputId, inputRef, changeQuery, clearQuery } =
-    usePresenter(onQueryChange);
+export const SearchField = observer(() => {
+  const { query, inputId, inputRef, isBusy, changeQuery, clearQuery } =
+    usePresenter();
 
   return (
     <>
       <h1 className={styles.title}>
         <label htmlFor={inputId}>Поиск сериалов</label>
       </h1>
-      <search className={styles.search}>
+      <search className={styles.search} aria-busy={isBusy}>
         <svg
           className={styles.searchIcon}
           aria-hidden="true"
@@ -48,4 +48,4 @@ export const SearchField = ({ query, onQueryChange }: SearchFieldProps) => {
       </search>
     </>
   );
-};
+});

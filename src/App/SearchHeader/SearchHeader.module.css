@@ -1,7 +1,15 @@
 .hero {
   position: relative;
-  isolation: isolate;
+  z-index: 1;
   padding: 25px 0 27px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 @media (max-width: 530px) {

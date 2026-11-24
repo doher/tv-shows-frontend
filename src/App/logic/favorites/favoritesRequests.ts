@@ -1,4 +1,4 @@
-export class FavoritesRequests {
+class FavoritesRequests {
   private active: AbortController | null = null;
 
   get pending() {
@@ -25,3 +25,5 @@ export class FavoritesRequests {
     this.active = null;
   }
 }
+
+export const favoritesRequests = new FavoritesRequests();
